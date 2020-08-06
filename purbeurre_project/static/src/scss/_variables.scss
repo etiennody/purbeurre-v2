@@ -1,0 +1,28 @@
+// Variables
+
+//- Override and add to color system
+
+$orange: #f4623a;
+$brown: #5c4d42;
+$rooibos: #C45525;
+$moules: #345A61;
+$rigolo: #86EBE6;
+$caramel: #DE9440;
+$biscuit: #E8A75D;
+
+//- Override primary color
+$primary: $rooibos;
+
+//- Override font system
+$font-family-sans-serif:"Scope One", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-serif: "Merriweather", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base: $font-family-sans-serif;
+$font-family-titles: "Open Sans", sans-serif;
+$headings-font-family: $font-family-titles;
+
+//- Add custom variables
+$navbar-height: 4.5rem;
