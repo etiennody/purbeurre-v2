@@ -42,15 +42,26 @@
             </div>
         </div>
     </nav>
-    {% endblock %}
+    {% endblock nav %}
 
     <!-- Masthead-->
     {% block header %}
-    {% endblock %}
+    {% endblock header%}
+
+    <!-- Messages alert-->
+    {% if messages %}
+
+    {% for message in messages %}
+    <div class="alert alert-{{ messages.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% endif %}
 
     <!-- Content-->
     {% block content %}
-    {% endblock %}
+    {% endblock content %}
 
     {% block footer %}
     <!-- Footer-->
@@ -66,7 +77,7 @@
             </div>
         </div>
     </footer>
-    {% endblock %}
+    {% endblock footer %}
 
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -18,10 +18,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 
-from pages import views
+from pages import views as pages_views
+from users import views as user_view
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', pages_views.home, name='home'),
+    path('register/', user_view.register, name='register'),
     path('admin/', admin.site.urls),
 ]
 
