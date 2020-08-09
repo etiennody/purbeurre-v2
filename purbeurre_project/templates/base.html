@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 {% load static %}
-<html lang="en">
+
+<html lang="fr">
 
 <head>
     <meta charset="utf-8" />
@@ -25,19 +27,33 @@
 <body id="page-top">
     <!-- Navigation-->
     {% block nav %}
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light py-3" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top"><img
-                    src="{% static 'dist/assets/img/logo_pur_beurre.png' %}" class="logo">Purbeurre</a>
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'home' %}#page-top"><img
+                    src="{% static 'dist/assets/img/logo_pur_beurre.png' %}" class="logo"
+                    alt="Logo de Purbeurre">Purbeurre</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
+
+                    {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Recherche</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mon compte</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes Aliments</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Déconnexion</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><i
+                                class="fas fa-user fa-2x" title="Mon compte"></i></a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes Produits</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><i
+                                class="fas fa-sign-out-alt fa-2x" title="Déconnexion"></i></a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Recherche</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'register' %}"><i
+                                class="far fa-user fa-2x" title="Créer mon compte"></i></a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes Produits</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}"><i
+                                class="fas fa-sign-out-alt fa-2x" title="Page d'accueil"></i></a></li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
@@ -52,9 +68,15 @@
     {% if messages %}
 
     {% for message in messages %}
-    <div class="alert alert-{{ messages.tags }}">
-        {{ message }}
-    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 
     {% endif %}
@@ -72,7 +94,7 @@
                     <a href="">Mentions Légales</a>
                 </div>
                 <div class="col-lg-6 col-md-6 text-center">
-                    <a href="#contact">Contact</a>
+                    <a href="{% url 'home' %}#contact">Contact</a>
                 </div>
             </div>
         </div>
