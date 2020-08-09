@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Inscription
+Connexion
 {% endblock title %}
 
 {% block content %}
@@ -13,18 +13,18 @@ Inscription
             <form method="POST">
                 {% csrf_token %}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">
-                        Rejoignez-nous maintenant
-                    </legend>
+                    <h3 class="border-bottom mb-4">
+                        Se connecter
+                    </h3>
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">S'inscrire</button>
+                    <button class="btn btn-outline-info" type="submit">Connexion</button>
                 </div>
             </form>
             <div class="border-top pt-3">
                 <small class="text-muted">
-                    Vous avez déjà un compte ? <a href="{% url 'login' %}" class="ml-2">S'identifier</a>
+                    Besoin d'un compte ? <a href="{% url 'register' %}" class="ml-2">S'incrire maintenant</a>
                 </small>
             </div>
         </div>
