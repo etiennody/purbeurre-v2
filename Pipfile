@@ -13,6 +13,7 @@ django = "*"
 psycopg2 = "*"
 django-debug-toolbar = "*"
 django-crispy-forms = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"
