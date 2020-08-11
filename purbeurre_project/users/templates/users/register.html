@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Inscription
+{% endblock title %}
+
+{% block content %}
+<div class="container border-top pt-5">
+    <div class="row">
+        <div class="col">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        Rejoignez-nous maintenant
+                    </legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">S'inscrire</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Vous avez déjà un compte ? <a href="{% url 'login' %}" class="ml-2">S'identifier</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
