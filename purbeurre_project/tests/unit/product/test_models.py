@@ -12,7 +12,7 @@ class ProductModelTest(TestCase):
     """
 
     def test_product__str__(self):
-        """Test the __str__() on Product model method. 
+        """Test the __str__() on Product model method
         """
         product = Product.objects.create(
             id="1",
@@ -34,7 +34,7 @@ class ProductModelTest(TestCase):
         self.assertTrue(str(product) == "Nutella")
 
     def test_product_has_two_categories(self):
-        """Test if a product can have two categories.
+        """Test if a product can have two categories
         """
         product = Product.objects.create(
             id="1",
@@ -59,21 +59,21 @@ class ProductModelTest(TestCase):
 
 
 class CategoryModelTest(TestCase):
-    """Ctaegory Model Tests
+    """Category Model Tests
 
     Args:
         TestCase (subclass): confirm test classes as subclasses of django.test.TestCase
     """
 
     def test_category__str__(self):
-        """Test the __str__() on Category model method. 
+        """Test the __str__() on Category model method
         """
         category = Category.objects.create(id="1", name="pate-a-tartiner",)
         self.assertTrue(category.__str__() == "pate-a-tartiner")
         self.assertTrue(str(category) == "pate-a-tartiner")
 
     def test_categories_have_a_product(self):
-        """Test if two categories can have a product.
+        """Test if two categories can have a product
         """
         product = Product.objects.create(
             id="1",
