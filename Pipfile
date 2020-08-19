@@ -4,9 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
 black = "*"
 flake8 = "*"
+pylint-django = "*"
 coverage = "*"
 
 [packages]
@@ -15,6 +15,7 @@ psycopg2 = "*"
 django-debug-toolbar = "*"
 django-crispy-forms = "*"
 pillow = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
