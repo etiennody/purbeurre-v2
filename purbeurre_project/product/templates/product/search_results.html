@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Résultats recherche produit
+{% endblock title %}
+
+{% block content %}
+<!-- Products list -->
+<div class="content-wrapper">
+    <!-- Products cards -->
+    {% for product in object_list %}
+    <div class="news-card">
+        <a href="#" class="news-card__card-link"></a>
+        <span class="news-card__notify-badge">{{ product.nutrition_grade|upper }}</span>
+        <img src="{{ product.image_url }}" alt="" class="news-card__image">
+        <div class="news-card__text-wrapper text-center">
+            <h2 class="news-card__title">{{ product.name }}</h2>
+            <div class="news-card__details-wrapper">
+                <a href="#" class="news-card__get-substitute stretched-link">Voir le substitut</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-lg-6 align-self-center mt-3">
+        <div class="jumbotron">
+            <h5>Désolé, aucun produit trouvé..</h5>
+        </div>
+    </div>
+    {% endfor %}
+    {% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?q={{ request.GET.q }}&page=1">&laquo; Première page</a>
+            <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Précédente</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Suivante</a>
+            <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Dernière page
+                &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
