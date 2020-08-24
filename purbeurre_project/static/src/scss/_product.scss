@@ -54,11 +54,11 @@ html {
 			transform: translateY(-50%);
             color: #818181;
 		}
-		.get-substitute {
+		.get-more {
 			left: 50%;
 		}
 		.img {
-			webkit-filter: blur(7px);
+			filter: blur(7px);
 			-o-filter: blur(7px);
 			-ms-filter: blur(7px);
 			filter: blur(7px);
@@ -157,7 +157,6 @@ html {
 	position: absolute;
 	width: 100%;
 	bottom: -20px;
-	font-family: 'PT Sans', sans-serif;
 	color: #828282;
 	opacity: 0;
 	.size {
@@ -171,9 +170,8 @@ html {
 	height: 100%;
 	top: 0;
 	left: 0;
-	font-family: 'Lato', sans-serif;
 	font-weight: 700;
-	.get-substitute {
+	.get-more {
 		-webkit-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
 		-moz-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
 		-o-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
@@ -194,11 +192,11 @@ html {
 		-o-transform: translate(-50%, -50%);
 		transform: translate(-50%, -50%);
 		.txt {
-			font-size: 12px;
+			font-size: 18px;
 			color: #fff;
 			letter-spacing: 0.045em;
-			text-transform: uppercase;
 			white-space: nowrap;
+			align-items: center;
 		}
 	}
 }
