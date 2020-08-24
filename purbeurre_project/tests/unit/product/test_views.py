@@ -30,27 +30,10 @@ def db_init():
         image_url="http://www.test-jus.fr",
     )
 
-    limonade = Product.objects.create(
-        id="2",
-        name="Limonade",
-        nutrition_grade="b",
-        energy_100g="2",
-        energy_unit="gr",
-        carbohydrates_100g="2",
-        sugars_100g="2",
-        fat_100g="2",
-        saturated_fat_100g="2",
-        salt_100g="0.2",
-        sodium_100g="0.2",
-        fiber_100g="0.2",
-        proteins_100g="0.2",
-        image_url="http://www.test-limonade.fr",
-    )
-
     rooibos = Product.objects.create(
-        id="3",
+        id="2",
         name="Rooibos",
-        nutrition_grade="c",
+        nutrition_grade="b",
         energy_100g="2",
         energy_unit="gr",
         carbohydrates_100g="2",
@@ -64,6 +47,23 @@ def db_init():
         image_url="http://www.test-rooibos.fr",
     )
 
+    limonade = Product.objects.create(
+        id="3",
+        name="Limonade",
+        nutrition_grade="c",
+        energy_100g="2",
+        energy_unit="gr",
+        carbohydrates_100g="2",
+        sugars_100g="2",
+        fat_100g="2",
+        saturated_fat_100g="2",
+        salt_100g="0.2",
+        sodium_100g="0.2",
+        fiber_100g="0.2",
+        proteins_100g="0.2",
+        image_url="http://www.test-limonade.fr",
+    )
+
 
 class ProductTest(TestCase):
     """ Test Product App """
@@ -74,6 +74,7 @@ class ProductTest(TestCase):
         cls.search_url = reverse("search")
         db_init()
 
+    # product views
     def test_valid_search_results_url_and_template(self):
         response = self.client.get(self.search_url + "?q=Jus")
         self.assertTemplateUsed(response, "product/search_results.html")
@@ -94,6 +95,19 @@ class ProductTest(TestCase):
     def test_invalid_search_results_product_ko(self):
         response = self.client.get(self.search_url + "?q=moutarde")
         self.assertEqual(response.context_data["object_list"].count(), 0)
+
+    # substitute views
+    def test_valid_substitute_results_url_and_template(self):
+        response = self.client.get("/substitute/1")
+        self.assertTemplateUsed(response, "product/substitute_results.html")
+        self.assertEqual(response.status_code, 200)
+
+    def test_substitute_better_nutriscore_or_equivalent_and_exclude_id(self):
+        response = self.client.get("/substitute/3")
+        self.assertEqual(response.status_code, 200)
+        if Product.objects.get(id=2) in response.context_data["object_list"]:
+            exclude_id = True
+        self.assertTrue(exclude_id)
 
 
 class ImportOffTest(TestCase):
