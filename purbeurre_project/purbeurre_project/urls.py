@@ -25,7 +25,12 @@ from users import views as user_view
 
 urlpatterns = [
     path("", pages_views.home, name="home"),
-    path("search/", product_views.SearchResultsView.as_view(), name="search",),
+    path("search/", product_views.SearchResultsView.as_view(), name="search"),
+    path(
+        "substitute/<int:product_id>",
+        product_views.SubstituteResultsView.as_view(),
+        name="substitute",
+    ),
     path("register/", user_view.register, name="register"),
     path("profile/", user_view.profile, name="profile"),
     path(

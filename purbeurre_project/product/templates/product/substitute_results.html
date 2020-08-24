@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Résultats recherche substituts
+{% endblock title %}
+
+{% block content %}
+<div class="container page-wrapper" id="product">
+    <div class="page-inner">
+        <br>
+        <h4 class="text-center">Vous pouvez remplacer cet aliment par :</h4>
+        <br>
+        <div class="row">
+            {% for product in object_list %}
+            <div class="el-wrapper">
+                <div class="box-up">
+                    <img class="img" src="{{ product.image_url }}" alt="Produit :: {{ product.name }}">
+                    <img class="card-notify-badge"
+                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.nutrition_grade }}.svg"
+                        alt="Nutri-score :: {{ product.nutrition_grade|upper }}"
+                        title="Nutri-score {{ product.nutrition_grade|upper }}">
+                    <div class="img-info">
+                        <div class="info-inner">
+                            <span class="product-name">{{ product.name }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-down">
+                    <div class="h-bg">
+                        <div class="h-bg-inner"></div>
+                    </div>
+                    <a class="cart" href="#">
+                        <span class="get-more">
+                            <span class="txt"><i class="far fa-save"></i> Sauvegarder</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-6 align-self-center mt-3">
+                <div class="jumbotron">
+                    <h5>Désolé, aucun substitut trouvé...</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?q={{ request.GET.q }}&page=1">&laquo; Première page</a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Précédente</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Suivante</a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Dernière page
+                    &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
