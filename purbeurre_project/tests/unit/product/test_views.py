@@ -109,6 +109,16 @@ class ProductTest(TestCase):
             exclude_id = True
         self.assertTrue(exclude_id)
 
+    # details views
+    def test_valid_product_details_template_and_url(self):
+        response = self.client.get("/details/1")
+        self.assertTemplateUsed(response, "product/product_details.html")
+        self.assertEqual(response.status_code, 200)
+
+    def test_invalid_product_details_results(self):
+        response = self.client.get("/details/666")
+        self.assertTrue(response.status_code, 404)
+
 
 class ImportOffTest(TestCase):
     def test_command_output(self):
