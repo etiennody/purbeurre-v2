@@ -78,6 +78,7 @@ class Command(BaseCommand):
                         sodium_100g=product["nutriments"].get("sodium_100g"),
                         fiber_100g=product["nutriments"].get("fiber_100g"),
                         proteins_100g=product["nutriments"].get("proteins_100g"),
+                        url=product.get("url"),
                         image_url=product.get("image_front_url"),
                     )
                 except Exception as e:
