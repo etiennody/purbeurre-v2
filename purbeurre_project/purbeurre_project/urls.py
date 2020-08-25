@@ -31,6 +31,9 @@ urlpatterns = [
         product_views.SubstituteResultsView.as_view(),
         name="substitute",
     ),
+    path(
+        "details/<int:pk>", product_views.ProductDetailsView.as_view(), name="details"
+    ),
     path("register/", user_view.register, name="register"),
     path("profile/", user_view.profile, name="profile"),
     path(

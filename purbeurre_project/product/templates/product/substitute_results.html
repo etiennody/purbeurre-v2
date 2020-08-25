@@ -7,6 +7,7 @@ Résultats recherche substituts
 {% endblock title %}
 
 {% block content %}
+{% include "product_header.html" with message=search header="product" image=image %}
 <div class="container page-wrapper" id="product">
     <div class="page-inner">
         <br>
@@ -24,6 +25,11 @@ Résultats recherche substituts
                     <div class="img-info">
                         <div class="info-inner">
                             <span class="product-name">{{ product.name }}</span>
+                        </div>
+                        <div class="a-size">
+                            <a href="{% url 'details' product.pk %}"
+                                class="btn btn-outline-info btn-rounded waves-effect" role="button"
+                                aria-pressed="true"><i class="fas fa-info-circle"></i> Détails</a>
                         </div>
                     </div>
                 </div>

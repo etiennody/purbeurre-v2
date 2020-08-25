@@ -1,6 +1,6 @@
 """Filter the results from Product database model
 """
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Product
 
@@ -60,3 +60,21 @@ class SubstituteResultsView(ListView):
             .order_by("nutrition_grade", "energy_100g")
             .distinct("nutrition_grade", "energy_100g")
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search"] = self.product.name
+        context["image"] = self.product.image_url
+        return context
+
+
+class ProductDetailsView(DetailView):
+    """ProductDetailsView is designed to display product details data
+
+    Args:
+        DetailView (generic class-based views):  contain the object that the view is operating upon
+    """
+
+    model = Product
+    template_name = "product/product_details.html"
+    paginate_by = 6
