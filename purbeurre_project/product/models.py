@@ -22,6 +22,7 @@ class Product(models.Model):
     sodium_100g = models.FloatField()
     fiber_100g = models.FloatField()
     proteins_100g = models.FloatField()
+    url = models.URLField(unique=True, null=True)
     image_url = models.URLField()
     categories = models.ManyToManyField(Category)
 

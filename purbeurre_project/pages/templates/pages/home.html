@@ -19,12 +19,14 @@ Accueil
                 <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous
                     consommez tous les jours.
                 </h2>
-                <form class="form-inline justify-content-center">
-                    <div class="form-group">
-                        <label for="inputSearchForm"></label>
-                        <input type="text" class="form-control" id="inputSearchForm" placeholder="Produit" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-search js-scroll-trigger">Chercher</button>
+                <form action="{% url 'search' %}" method="GET" class="form-inline justify-content-center">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input name="q" type="text" class="form-control form-control-lg" id="inputSearchForm" placeholder="Produit" aria-label="Produit" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-lg">Chercher</button>
+                        </div>
+                      </div>
                 </form>
             </div>
         </div>

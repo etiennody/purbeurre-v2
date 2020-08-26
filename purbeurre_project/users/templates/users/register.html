@@ -7,25 +7,28 @@ Inscription
 {% endblock title %}
 
 {% block content %}
-<div class="container border-top pt-5">
+<div class="container">
     <div class="row">
-        <div class="col">
-            <form method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">
-                        Rejoignez-nous maintenant
-                    </legend>
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">S'inscrire</button>
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signup flex-row my-5">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Créer un compte</h4>
+                    <form class="form-signup" method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase"
+                                type="submit">S'inscrire</button>
+                        </div>
+                    </form>
+                    <div class="card-info border-top pt-3">
+                        <small class="text-muted">
+                            <a href="{% url 'login' %}">Tu as déjà un compte ?</a>
+                        </small>
+                    </div>
                 </div>
-            </form>
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    Vous avez déjà un compte ? <a href="{% url 'login' %}" class="ml-2">S'identifier</a>
-                </small>
             </div>
         </div>
     </div>
