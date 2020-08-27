@@ -34,6 +34,7 @@ urlpatterns = [
     path(
         "details/<int:pk>", product_views.ProductDetailsView.as_view(), name="details"
     ),
+    path("save/", product_views.save_view, name="save"),
     path("register/", user_view.register, name="register"),
     path("profile/", user_view.profile, name="profile"),
     path(

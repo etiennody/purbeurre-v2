@@ -7,27 +7,27 @@ Résultats recherche substituts
 {% endblock title %}
 
 {% block content %}
-{% include "product_header.html" with message=search header="product" image=image %}
+{% include "product_header.html" with info=search header="product" image=image %}
 <div class="container page-wrapper" id="product">
     <div class="page-inner">
         <br>
         <h4 class="text-center">Vous pouvez remplacer cet aliment par :</h4>
         <br>
         <div class="row">
-            {% for product in object_list %}
+            {% for substitute in object_list %}
             <div class="el-wrapper">
                 <div class="box-up">
-                    <img class="img" src="{{ product.image_url }}" alt="Produit :: {{ product.name }}">
+                    <img class="img" src="{{ substitute.image_url }}" alt="Produit :: {{ substitute.name }}">
                     <img class="card-notify-badge"
-                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.nutrition_grade }}.svg"
-                        alt="Nutri-score :: {{ product.nutrition_grade|upper }}"
-                        title="Nutri-score {{ product.nutrition_grade|upper }}">
+                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ substitute.nutrition_grade }}.svg"
+                        alt="Nutri-score :: {{ substitute.nutrition_grade|upper }}"
+                        title="Nutri-score {{ substitute.nutrition_grade|upper }}">
                     <div class="img-info">
                         <div class="info-inner">
-                            <span class="product-name">{{ product.name }}</span>
+                            <span class="substitute-name">{{ substitute.name }}</span>
                         </div>
                         <div class="a-size">
-                            <a href="{% url 'details' product.pk %}"
+                            <a href="{% url 'details' substitute.pk %}"
                                 class="btn btn-outline-info btn-rounded waves-effect" role="button"
                                 aria-pressed="true"><i class="fas fa-info-circle"></i> Détails</a>
                         </div>
@@ -37,11 +37,18 @@ Résultats recherche substituts
                     <div class="h-bg">
                         <div class="h-bg-inner"></div>
                     </div>
-                    <a class="cart" href="#">
+                    <div class="cart">
                         <span class="get-more">
-                            <span class="txt"><i class="far fa-save"></i> Sauvegarder</span>
+                            <form action="{% url 'save' %}" method="POST" id="substituteForm">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input type="hidden" name="substitute_id" value="{{ substitute.id }}">
+                                <button type="submit"><span class="txt"><i class="far fa-save"></i>
+                                        Sauvegarder</span></button>
+                            </form>
                         </span>
-                    </a>
+                    </div>
                 </div>
             </div>
             {% empty %}
@@ -56,18 +63,18 @@ Résultats recherche substituts
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-                <a href="?q={{ request.GET.q }}&page=1">&laquo; Première page</a>
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Précédente</a>
+                <a href="?q={{ request.GET.q }}&page=1"><i class="fas fa-angle-double-left fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}"><i
+                        class="fas fa-angle-left fa-2x"></i></a>
                 {% endif %}
 
-                <span class="current">
-                    Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
-                </span>
+                <span class="current">Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
 
                 {% if page_obj.has_next %}
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Suivante</a>
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Dernière page
-                    &raquo;</a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}"><i
+                        class="fas fa-angle-right fa fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}"><i
+                        class="fas fa-angle-double-right fa-2x"></i></a>
                 {% endif %}
             </span>
         </div>
