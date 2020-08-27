@@ -55,18 +55,18 @@ Résultats recherche produits
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-                <a href="?q={{ request.GET.q }}&page=1">&laquo; Première page</a>
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Précédente</a>
+                <a href="?q={{ request.GET.q }}&page=1"><i class="fas fa-angle-double-left fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}"><i
+                        class="fas fa-angle-left fa-2x"></i></a>
                 {% endif %}
 
-                <span class="current">
-                    Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
-                </span>
+                <span class="current">Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
 
                 {% if page_obj.has_next %}
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Suivante</a>
-                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">Dernière page
-                    &raquo;</a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}"><i
+                        class="fas fa-angle-right fa fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}"><i
+                        class="fas fa-angle-double-right fa-2x"></i></a>
                 {% endif %}
             </span>
         </div>
