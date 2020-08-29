@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Mes favoris
+{% endblock title %}
+
+{% block content %}
+{% include "product_header.html" with info="Mes produits" %}
+<div class="container page-wrapper" id="product">
+    <div class="page-inner">
+        <br>
+        <h4 class="text-center">Liste de mes substituts enregistrés :</h4>
+        <br>
+        <div class="row">
+            {% for product in object_list %}
+            <div class="el-wrapper">
+                <div class="box-up">
+                    <img class="img" src="{{ product.substitute.image_url }}"
+                        alt="Produit :: {{ product.substitute.name }}">
+                    <img class="card-notify-badge"
+                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.substitute.nutrition_grade }}.svg"
+                        alt="Nutri-score :: {{ product.substitute.nutrition_grade|upper }}"
+                        title="Nutri-score {{ product.substitute.nutrition_grade|upper }}">
+                    <div class="img-info">
+                        <div class="info-inner">
+                            <span class="product.substitute-name">{{ product.substitute.name }}</span>
+                        </div>
+                        <div class="a-size">
+                            <a href="{% url 'details' product.substitute.pk %}"
+                                class="btn btn-outline-info btn-rounded waves-effect" role="button"
+                                aria-pressed="true"><i class="fas fa-info-circle"></i> Détails</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-down">
+                    <div class="h-bg">
+                        <div class="h-bg-inner"></div>
+                    </div>
+                    <div class="cart">
+                        <span class="get-more">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <button type='submit' class="btn btn-outline-info border-0">
+                                    <span class="txt">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </span>
+                                </button>
+                            </form>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-12 align-self-center">
+                <div class="jumbotron text-center">
+                    <h5>Désolé, aucun substitut enregistré trouvé...</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?q={{ request.GET.q }}&page=1"><i class="fas fa-angle-double-left fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}"><i
+                        class="fas fa-angle-left fa-2x"></i></a>
+                {% endif %}
+
+                <span class="current">Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
+
+                {% if page_obj.has_next %}
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}"><i
+                        class="fas fa-angle-right fa fa-2x"></i></a>
+                <a href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}"><i
+                        class="fas fa-angle-double-right fa-2x"></i></a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
