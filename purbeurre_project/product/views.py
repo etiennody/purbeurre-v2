@@ -2,6 +2,7 @@
 """
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
@@ -92,18 +93,14 @@ def save_view(request):
     """
 
     if request.method == "POST":
-
         product_id = request.POST["product_id"]
         substitute_id = request.POST["substitute_id"]
         page = request.POST["next"]
-
         _user = request.user
-
         if _user and product_id and substitute_id:
             obj, created = CustomerProduct.objects.get_or_create(
                 customer=_user, product_id=product_id, substitute_id=substitute_id,
             )
-
             if created:
                 messages.add_message(
                     request, messages.SUCCESS, "Le produit est sauvegardé !"
@@ -113,5 +110,22 @@ def save_view(request):
                     request, messages.INFO, "Le produit est déja enregistré !"
                 )
                 return redirect(page)
-
     return redirect("home")
+
+
+class FavoritesView(ListView, LoginRequiredMixin):
+    """FavoritesView is designed to display favorite list data
+    with a user authenticated
+
+    Args:
+        ListView (generic class-based views): render substitute list of objects
+        LoginRequiredMixin (class): verify that the current user is authenticated
+    """
+
+    template_name = "product/favorites.html"
+    paginate_by = 6
+
+    def get_queryset(self):
+        return CustomerProduct.objects.filter(customer=self.request.user.id).order_by(
+            "product"
+        )
