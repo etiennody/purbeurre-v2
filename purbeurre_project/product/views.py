@@ -103,14 +103,14 @@ def save_view(request):
             )
             if created:
                 messages.add_message(
-                    request, messages.SUCCESS, "Le produit est sauvegardé !"
+                    request, messages.SUCCESS, "Le substitut a bien été sauvegardé !"
                 )
             else:
                 messages.add_message(
-                    request, messages.INFO, "Le produit est déja enregistré !"
+                    request, messages.INFO, "Le substitut est déja enregistré !"
                 )
                 return redirect(page)
-    return redirect("home")
+    return redirect("favorites")
 
 
 class FavoritesView(ListView, LoginRequiredMixin):
