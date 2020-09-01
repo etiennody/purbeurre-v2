@@ -18,6 +18,7 @@ class ProductTest(TestCase):
             email="test_bob@test.com",
             password="fglZfYmr%?,",
         )
+
         category = Category.objects.create(name="Boissons")
 
         jus = Product.objects.create(
@@ -94,8 +95,6 @@ class ProductTest(TestCase):
         response = self.client.get(reverse("search"), {"q": "Moutarde"})
         self.assertEqual(response.context_data["object_list"].count(), 0)
 
-    
-
     # substitute views
     def test_valid_substitute_results_url_and_template(self):
         response = self.client.get(reverse("substitute", args=["1"]))
@@ -151,3 +150,13 @@ class ProductTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "product/favorites.html")
         self.assertEqual(response.context_data["object_list"].count(), 0)
+
+    # test views
+    def test_delete_if_not_logged(self):
+        response = self.client.post("/delete/1000")
+        self.assertRedirects(
+            response,
+            "/login/?next=/delete/1000",
+            status_code=302,
+            target_status_code=200,
+        )
