@@ -40,9 +40,9 @@ Mes favoris
                     </div>
                     <div class="cart">
                         <span class="get-more">
-                            <form action="#" method="POST">
+                            <form action="{% url 'delete' product.id %}" method="POST">
                                 {% csrf_token %}
-                                <button type='submit' class="btn btn-outline-info border-0">
+                                <button type='submit' class="btn btn-outline-info border-0" value="Confirm">
                                     <span class="txt">
                                         <i class="fas fa-trash"></i> Supprimer
                                     </span>
