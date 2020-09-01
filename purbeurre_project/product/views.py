@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, DetailView, ListView
 
 from .models import CustomerProduct, Product
 
@@ -129,3 +130,17 @@ class FavoritesView(ListView, LoginRequiredMixin):
         return CustomerProduct.objects.filter(customer=self.request.user.id).order_by(
             "product"
         )
+
+
+class DeleteView(LoginRequiredMixin, DeleteView):
+    """A view that displays a confirmation page and deletes an existing object.
+    The object is deleted only if the request is of type POST.
+
+    Args:
+        DeleteView (generic class-based views): displays a confirmation page with a removal form
+        LoginRequiredMixin (class): verify that the current user is authenticated
+        
+    """
+
+    model = CustomerProduct
+    success_url = reverse_lazy("favorites")
