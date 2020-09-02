@@ -12,7 +12,6 @@ coverage = "*"
 [packages]
 django = "*"
 psycopg2 = "*"
-django-debug-toolbar = "*"
 django-crispy-forms = "*"
 pillow = "*"
 requests = "*"
