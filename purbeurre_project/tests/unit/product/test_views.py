@@ -129,7 +129,10 @@ class ProductTest(TestCase):
         substitute = Product.objects.get(name="Product 2")
         response = self.client.get(reverse("save"), args=(product.id, substitute.id))
         self.assertRedirects(
-            response, "/login/?next=/save/", status_code=302, target_status_code=200,
+            response,
+            "/login/?next=/save/",
+            status_code=302,
+            target_status_code=200,
         )
 
     def test_valid_save_view_if_logged(self):
@@ -179,7 +182,10 @@ class ProductTest(TestCase):
     def test_invalid_delete_if_not_logged(self):
         response = self.client.post("/delete/5")
         self.assertRedirects(
-            response, "/login/?next=/delete/5", status_code=302, target_status_code=200,
+            response,
+            "/login/?next=/delete/5",
+            status_code=302,
+            target_status_code=200,
         )
 
     def test_invalid_delete_if_logged_and_unknown_substitute_id(self):
