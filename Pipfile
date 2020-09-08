@@ -9,6 +9,7 @@ flake8 = "*"
 pylint-django = "*"
 coverage = "*"
 ipdb = "*"
+selenium = "*"
 
 [packages]
 django = "*"
