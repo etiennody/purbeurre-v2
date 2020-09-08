@@ -8,15 +8,18 @@ black = "*"
 flake8 = "*"
 pylint-django = "*"
 coverage = "*"
+ipdb = "*"
+selenium = "*"
 
 [packages]
 django = "*"
 psycopg2 = "*"
-django-debug-toolbar = "*"
 django-crispy-forms = "*"
 pillow = "*"
 requests = "*"
 django-extensions = "*"
+responses = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.8"

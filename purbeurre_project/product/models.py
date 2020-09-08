@@ -29,6 +29,15 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def substitutes(self):
+        return (
+            Product.objects.filter(categories__name=self.categories.first())
+            .filter(nutrition_grade__lte=self.nutrition_grade)
+            .exclude(id=self.id)
+            .order_by("nutrition_grade", "energy_100g")
+            .distinct("nutrition_grade", "energy_100g")
+        )
+
 
 class CustomerProduct(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)

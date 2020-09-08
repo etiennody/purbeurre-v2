@@ -1,8 +1,13 @@
 """Filter the results from Product database model
 """
-from django.views.generic import ListView, DetailView
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, DetailView, ListView
 
-from .models import Product
+from .models import CustomerProduct, Product
 
 
 class SearchResultsView(ListView):
@@ -23,7 +28,7 @@ class SearchResultsView(ListView):
         """Retrieving specific objects with iconatains filter
 
         Returns:
-            list: objects by products name 
+            list: objects by products name
         """
         query = self.request.GET.get("q")
         object_list = Product.objects.filter(name__icontains=query).order_by("name")
@@ -31,7 +36,8 @@ class SearchResultsView(ListView):
 
 
 class SubstituteResultsView(ListView):
-    """Limit the substitute results page to filter the results outputted based upon a substitute query
+    """Limit the substitute results page to filter the results
+    outputted based upon a substitute query
 
     Args:
         ListView (generic class-based views): render some list of objects
@@ -51,20 +57,15 @@ class SubstituteResultsView(ListView):
         Returns:
             list: objects by complex query
         """
-        self._id = self.kwargs["product_id"]
-        self.product = Product.objects.get(pk=self._id)
-        return (
-            Product.objects.filter(categories__name=self.product.categories.first())
-            .filter(nutrition_grade__lte=self.product.nutrition_grade)
-            .exclude(id=self._id)
-            .order_by("nutrition_grade", "energy_100g")
-            .distinct("nutrition_grade", "energy_100g")
-        )
+        self.id = self.kwargs["product_id"]
+        self.product = Product.objects.get(pk=self.id)
+        return self.product.substitutes()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["search"] = self.product.name
         context["image"] = self.product.image_url
+        context["product"] = self.product
         return context
 
 
@@ -78,3 +79,66 @@ class ProductDetailsView(DetailView):
     model = Product
     template_name = "product/product_details.html"
     paginate_by = 6
+
+
+@login_required
+def save_view(request):
+    """Function views to save the subsitute
+
+    Args:
+        request (object): an HttpRequest object
+
+    Returns:
+        redirect: Return an HttpResponseRedirect to the homepage URL
+    """
+
+    if request.method == "POST":
+        product_id = request.POST["product_id"]
+        substitute_id = request.POST["substitute_id"]
+        page = request.POST["next"]
+        _user = request.user
+        if _user and product_id and substitute_id:
+            obj, created = CustomerProduct.objects.get_or_create(
+                customer=_user, product_id=product_id, substitute_id=substitute_id,
+            )
+            if created:
+                messages.add_message(
+                    request, messages.SUCCESS, "Le substitut a bien été sauvegardé !"
+                )
+            else:
+                messages.add_message(
+                    request, messages.INFO, "Le substitut est déja enregistré !"
+                )
+                return redirect(page)
+    return redirect("favorites")
+
+
+class FavoritesView(ListView, LoginRequiredMixin):
+    """FavoritesView is designed to display favorite list data
+    with a user authenticated
+
+    Args:
+        ListView (generic class-based views): render substitute list of objects
+        LoginRequiredMixin (class): verify that the current user is authenticated
+    """
+
+    template_name = "product/favorites.html"
+    paginate_by = 6
+
+    def get_queryset(self):
+        return CustomerProduct.objects.filter(customer=self.request.user.id).order_by(
+            "product"
+        )
+
+
+class DeleteView(LoginRequiredMixin, DeleteView):
+    """A view that displays a confirmation page and deletes an existing object.
+    The object is deleted only if the request is of type POST.
+
+    Args:
+        DeleteView (generic class-based views): displays a confirmation page with a removal form
+        LoginRequiredMixin (class): verify that the current user is authenticated
+    """
+
+    model = CustomerProduct
+    success_url = reverse_lazy("favorites")

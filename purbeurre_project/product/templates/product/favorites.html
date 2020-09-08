@@ -3,31 +3,32 @@
 {% load static %}
 
 {% block title %}
-Résultats recherche substituts
+Mes favoris
 {% endblock title %}
 
 {% block content %}
-{% include "product_header.html" with info=search header="product" image=image %}
+{% include "product_header.html" with info="Mes produits" %}
 <div class="container page-wrapper" id="product">
     <div class="page-inner">
         <br>
-        <h4 class="text-center">Vous pouvez remplacer cet aliment par :</h4>
+        <h4 class="text-center">Liste de mes substituts enregistrés :</h4>
         <br>
         <div class="row">
-            {% for substitute in object_list %}
+            {% for product in object_list %}
             <div class="el-wrapper">
                 <div class="box-up">
-                    <img class="img" src="{{ substitute.image_url }}" alt="Produit :: {{ substitute.name }}">
+                    <img class="img" src="{{ product.substitute.image_url }}"
+                        alt="Produit :: {{ product.substitute.name }}">
                     <img class="card-notify-badge"
-                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ substitute.nutrition_grade }}.svg"
-                        alt="Nutri-score :: {{ substitute.nutrition_grade|upper }}"
-                        title="Nutri-score {{ substitute.nutrition_grade|upper }}">
+                        src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.substitute.nutrition_grade }}.svg"
+                        alt="Nutri-score :: {{ product.substitute.nutrition_grade|upper }}"
+                        title="Nutri-score {{ product.substitute.nutrition_grade|upper }}">
                     <div class="img-info">
                         <div class="info-inner">
-                            <span class="substitute-name">{{ substitute.name }}</span>
+                            <span class="product.substitute-name">{{ product.substitute.name }}</span>
                         </div>
                         <div class="a-size">
-                            <a href="{% url 'details' substitute.pk %}"
+                            <a href="{% url 'details' product.substitute.pk %}"
                                 class="btn btn-outline-info btn-rounded waves-effect" role="button"
                                 aria-pressed="true"><i class="fas fa-info-circle"></i> Détails</a>
                         </div>
@@ -39,14 +40,11 @@ Résultats recherche substituts
                     </div>
                     <div class="cart">
                         <span class="get-more">
-                            <form action="{% url 'save' %}" method="POST" id="substituteForm">
+                            <form action="{% url 'delete' product.id %}" method="POST">
                                 {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.path }}">
-                                <input type="hidden" name="product_id" value="{{ product.id }}">
-                                <input type="hidden" name="substitute_id" value="{{ substitute.id }}">
-                                <button type="submit" class="btn btn-outline-info border-0">
+                                <button type='submit' class="btn btn-outline-info border-0" value="Confirm">
                                     <span class="txt">
-                                        <i class="far fa-save"></i> Sauvegarder
+                                        <i class="fas fa-trash"></i> Supprimer
                                     </span>
                                 </button>
                             </form>
@@ -55,9 +53,19 @@ Résultats recherche substituts
                 </div>
             </div>
             {% empty %}
-            <div class="col-lg-6 align-self-center mt-3">
-                <div class="jumbotron">
-                    <h5>Désolé, aucun substitut trouvé...</h5>
+            <div class="col-lg-12 align-self-center">
+                <div class="jumbotron text-center">
+                    <h5>Désolé, ta liste de substituts est vide...</h5>
+                    <div class="option text-center">
+                        <span>
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-rounded waves-effect" role="button"
+                                aria-pressed="true">Se connecter</a>
+                        </span>
+                        <span>
+                            <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-rounded waves-effect"
+                                role="button" aria-pressed="true">S'inscrire maintenant</a>
+                        </span>
+                    </div>
                 </div>
             </div>
             {% endfor %}

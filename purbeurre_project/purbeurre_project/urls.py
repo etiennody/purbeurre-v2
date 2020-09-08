@@ -34,6 +34,9 @@ urlpatterns = [
     path(
         "details/<int:pk>", product_views.ProductDetailsView.as_view(), name="details"
     ),
+    path("save/", product_views.save_view, name="save"),
+    path("favorites/", product_views.FavoritesView.as_view(), name="favorites"),
+    path("delete/<int:pk>", product_views.DeleteView.as_view(), name="delete"),
     path("register/", user_view.register, name="register"),
     path("profile/", user_view.profile, name="profile"),
     path(
@@ -51,8 +54,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # import debug_toolbar
-
-    # urlpatterns = [
-    #     url(r"^__debug__/", include(debug_toolbar.urls)),
-    # ] + urlpatterns

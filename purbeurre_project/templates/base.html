@@ -36,7 +36,7 @@
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                <ul class="navbar-nav ml-auto my-2 my-lg-6">
                     <li class="nav-item">
                         <form action="{% url 'search' %}" method="GET" class="form-inline">
                             {% csrf_token %}
@@ -49,14 +49,14 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><i
                                 class="fas fa-user fa-2x" title="Mon compte"></i></a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes Produits</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'favorites' %}"><i class="fas fa-carrot fa-2x fa-fw" alt="Retrouver ma liste de substituts" title="Mes produits"></i></a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><i
                                 class="fas fa-sign-out-alt fa-2x" title="Déconnexion"></i></a></li>
                     {% else %}
 
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'register' %}"><i
                                 class="far fa-user fa-2x" title="Créer mon compte"></i></a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes Produits</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'favorites' %}"><i class="fas fa-carrot fa-2x fa-fw" alt="Retrouver ma liste de substituts" title="Mes produits"></i></a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'home' %}"><i
                                 class="fas fa-sign-out-alt fa-2x" title="Page d'accueil"></i></a></li>
                     {% endif %}
