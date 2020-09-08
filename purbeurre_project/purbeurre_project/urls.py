@@ -37,6 +37,7 @@ urlpatterns = [
     path("save/", product_views.save_view, name="save"),
     path("favorites/", product_views.FavoritesView.as_view(), name="favorites"),
     path("delete/<int:pk>", product_views.DeleteView.as_view(), name="delete"),
+    path("tos/", pages_views.tos, name="tos"),
     path("register/", user_view.register, name="register"),
     path("profile/", user_view.profile, name="profile"),
     path(
