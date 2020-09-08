@@ -3,7 +3,7 @@ import time
 import unittest
 
 from django.contrib.auth.models import User
-from django.test import Client, TestCase
+from django.test import TestCase
 from django.urls import reverse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
