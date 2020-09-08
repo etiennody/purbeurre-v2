@@ -139,7 +139,6 @@ class DeleteView(LoginRequiredMixin, DeleteView):
     Args:
         DeleteView (generic class-based views): displays a confirmation page with a removal form
         LoginRequiredMixin (class): verify that the current user is authenticated
-        
     """
 
     model = CustomerProduct

@@ -1,18 +1,14 @@
 """Users App forms tests"""
-import os
-
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.urls import reverse
 
 from users.forms import AuthenticationFormWithInactiveUsersOkay, UserRegisterForm
-from users.models import Profile
 
 
 class RegisterTests(TestCase):
     """Register Unit Test"""
 
-    def setUp(self):  # pragma: no cover
+    def setUp(self):
         """Register test set up"""
         self.credentials = {
             "username": "BobRobert",
