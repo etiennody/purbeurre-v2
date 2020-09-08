@@ -1,9 +1,13 @@
-from django.contrib.auth.models import User
-from django.core.management import call_command
-from django.test import Client, SimpleTestCase, TestCase, TransactionTestCase
-from django.urls import reverse
+import time
+import unittest
 
-from product.models import Category, CustomerProduct, Product
+from django.contrib.auth.models import User
+from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+from product.models import Category, Product
 
 
 class ProductTest(TestCase):
@@ -26,7 +30,7 @@ class ProductTest(TestCase):
         user.set_password("fglZfYmr%?,")
         user.save()
 
-        category = Category.objects.create(name="Categorie test")
+        Category.objects.create(name="Categorie test")
 
         number_of_products = 13
         for product in range(number_of_products):
@@ -91,7 +95,7 @@ class ProductTest(TestCase):
         self.assertTrue(exclude_id)
 
     def test_valid_substitute_without_products(self):
-        junk_product = Product.objects.create(
+        healthy_product = Product.objects.create(
             id=14,
             name="Product 14",
             nutrition_grade="a",
@@ -105,10 +109,10 @@ class ProductTest(TestCase):
             sodium_100g="0.2",
             fiber_100g="0.2",
             proteins_100g="0.2",
-            image_url=f"http://www.test-product14.fr/product.jpg",
-            url=f"http://www.test-product14.fr",
+            image_url="http://www.test-product14.fr/product.jpg",
+            url="http://www.test-product14.fr",
         )
-        response = self.client.get(reverse("substitute", args=["14"]))
+        response = self.client.get(reverse("substitute", args=[healthy_product.id]))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["object_list"].count(), 0)
 
@@ -227,3 +231,99 @@ class Test404(SimpleTestCase):
         response = self.client.get("/url_error")
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.templates[0].name, "404.html")
+
+
+class HomepageSeleniumTest(unittest.TestCase):
+    def setUp(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(
+            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        )
+        Category.objects.create(name="test")
+        number_of_products = 12
+        for product in range(number_of_products):
+            Product.objects.create(
+                id=f"{product}",
+                name=f"Product {product}",
+                nutrition_grade="b",
+                energy_100g="2",
+                energy_unit="gr",
+                carbohydrates_100g="2",
+                sugars_100g="2",
+                fat_100g="2",
+                saturated_fat_100g="2",
+                salt_100g="0.2",
+                sodium_100g="0.2",
+                fiber_100g="0.2",
+                proteins_100g="0.2",
+                image_url=f"http://www.test-product{product}.fr/product.jpg",
+                url=f"http://www.test-product{product}.fr",
+            )
+
+    def test_valid_live_home_page_title_is_present(self):
+        self.driver.get("http://127.0.0.1:8000/")
+        if not "Accueil :: Purbeurre" in self.driver.title:
+            raise Exception("Unable to load purbeurre homepage!")
+        self.assertIn("Accueil :: Purbeurre", self.driver.title)
+
+    def tearDown(self):
+        self.driver.close()
+
+
+class SearchResultsPageSeleniumTest(unittest.TestCase):
+    def setUp(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(
+            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        )
+
+    def test_valid_live_search_results_page_title__and_product_present(self):
+
+        self.driver.get("http://127.0.0.1:8000/search/?q=product")
+        if not "Résultats recherche produits :: Purbeurre" in self.driver.title:
+            raise Exception("Unable to load purbeurre search results page!")
+        self.assertIn("Résultats recherche produits :: Purbeurre", self.driver.title)
+        assert "product" in self.driver.page_source
+
+    def tearDown(self):
+        self.driver.close()
+
+
+class SubstituteResultsPageSeleniumTest(unittest.TestCase):
+    def setUp(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(
+            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        )
+
+    def test_valid_live_substitute_results_page(self):
+        product = Product.objects.get(name="Product 1")
+        self.driver.get("http://127.0.0.1:8000/")
+        text = self.driver.find_element_by_id("inputSearchForm")
+        submit = self.driver.find_element_by_class_name("btn")
+        time.sleep(5)
+        self.driver.implicitly_wait(5)
+        text.send_keys("product")
+        submit.click()
+        self.driver.get("http://127.0.0.1:8000/search?q=product")
+        product = self.driver.find_element_by_class_name("get-more")
+        time.sleep(5)
+        self.driver.implicitly_wait(5)
+        product.click()
+        current_url = self.driver.current_url
+        if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
+            current_url = self.driver.current_url[:-1]
+        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/242476")
+        self.assertIn("Résultats recherche substituts :: Purbeurre", self.driver.title)
+        self.assertIn(
+            "Vous pouvez remplacer cet aliment par :", self.driver.page_source
+        )
+
+    def tearDown(self):
+        self.driver.close()
