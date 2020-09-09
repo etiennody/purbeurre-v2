@@ -1,5 +1,7 @@
 <header
-    style="background: linear-gradient(to bottom,rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%); url({{ image }});"
+    {% if image %}
+    style="background-image: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url({{ image }});"
+    {% endif %}
     class="product-header">
     <div class="header">
         <h1>{{ info }}</h1>
