@@ -88,7 +88,7 @@ class RegisterSeleniumTest(unittest.TestCase):
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
         self.assertEqual(current_url, "http://127.0.0.1:8000/register")
-        self.assertIn("Tu as déjà un compte ?", self.driver.page_source)
+        self.assertIn("Vous avez déjà un compte ?", self.driver.page_source)
 
     def tearDown(self):
         self.driver.close()
