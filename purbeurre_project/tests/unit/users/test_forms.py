@@ -1,8 +1,10 @@
-"""Users App forms tests"""
+"""Users App forms tests
+"""
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from users.forms import AuthenticationFormWithInactiveUsersOkay, UserRegisterForm
+from users.forms import (AuthenticationFormWithInactiveUsersOkay,
+                         UserRegisterForm)
 
 
 class RegisterTests(TestCase):
@@ -19,6 +21,7 @@ class RegisterTests(TestCase):
         }
 
     def test_valid_userregisterform(self):
+        """Valid if user can use the register form"""
         form = UserRegisterForm(
             data={
                 "username": "BobRobert",
@@ -33,6 +36,7 @@ class RegisterTests(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_invalid_not_match_password_userregisterform(self):
+        """Invalid when a password is not match on register form"""
         form = UserRegisterForm(
             data={
                 "username": "BobRobert",
@@ -47,6 +51,7 @@ class RegisterTests(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_invalid_password_userregisterform(self):
+        """Invalid register form when password is too short"""
         form = UserRegisterForm(
             data={
                 "username": "BobRobert",
@@ -61,6 +66,7 @@ class RegisterTests(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_invalid_user_already_exists_userregisterform(self):
+        """Invalid register form when user is already exists"""
         User.objects.create_user(**self.credentials)
         form = UserRegisterForm(
             data={
@@ -83,11 +89,13 @@ class LoginTests(TestCase):
         User.objects.create_user(**self.credentials)
 
     def test_valid_authenticationform(self):
+        """Valid authentication form when user exists in db"""
         form = AuthenticationFormWithInactiveUsersOkay(
             data={"username": "BobRobert", "password": "fglZfYmr%?,"}
         )
         self.assertTrue(form.is_valid())
 
     def test_invalid_authenticationform(self):
+        """Invalid authentication form when only username is used to login"""
         form = AuthenticationFormWithInactiveUsersOkay(data={"username": "BobRobert"})
         self.assertFalse(form.is_valid())
