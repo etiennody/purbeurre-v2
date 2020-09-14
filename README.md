@@ -9,7 +9,7 @@ The startup Pur Beurre wants to develop a web platform for its customers. This s
 * Python 3
 * Django
 * Psycopg2
-* PostgreSql
+* PostgreSQL
 * Requests
 * Pillow
 
@@ -36,7 +36,7 @@ To run this application locally:
     pipenv shell
     ```
 
-* Create a database with postgresql
+* Create a database with PostgreSQL
 
 
 * Add and update this information in environment variables file named .env in root directory:
@@ -44,7 +44,7 @@ To run this application locally:
     * PURBEURRE_DBUSER=yourpurbeurre_dbuser
     * PURBEURRE_DBPASSWD=yourpurbeurre_dbpassword
 
-* Import data from Openfood Facts:
+* Import data from Open Food Facts:
     ```
     python manage.py import_off
     ```
