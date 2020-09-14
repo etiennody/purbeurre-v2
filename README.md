@@ -36,8 +36,10 @@ To run this application locally:
     pipenv shell
     ```
 
-* Create a database with postgresql:
-    Add and update this information in environment variables file named .env in root directory:
+* Create a database with postgresql
+
+
+* Add and update this information in environment variables file named .env in root directory:
     * PURBEURRE_DBNAME=yourpurbeurre_dbname
     * PURBEURRE_DBUSER=yourpurbeurre_dbuser
     * PURBEURRE_DBPASSWD=yourpurbeurre_dbpassword
