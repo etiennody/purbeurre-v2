@@ -38,9 +38,9 @@ To run this application locally:
 
 * Create a database with postgresql:
     Add and update this information in environment variables file named .env in root directory:
-    * PURBEURRE_DBNAME=<your purbeurre_dbname>
-    * PURBEURRE_DBUSER=<your purbeurre_dbuser>
-    * PURBEURRE_DBPASSWD=<your purbeurre_dbpassword>
+    * PURBEURRE_DBNAME=yourpurbeurre_dbname
+    * PURBEURRE_DBUSER=yourpurbeurre_dbuser
+    * PURBEURRE_DBPASSWD=yourpurbeurre_dbpassword
 
 * Import data from Openfood Facts:
     ```
