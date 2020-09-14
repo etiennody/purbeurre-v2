@@ -7,10 +7,11 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+/node_modules/*
 .Python
 build/
 develop-eggs/
-dist/
+src/
 downloads/
 eggs/
 .eggs/
