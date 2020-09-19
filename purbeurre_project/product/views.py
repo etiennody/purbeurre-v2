@@ -99,7 +99,9 @@ def save_view(request):
         _user = request.user
         if _user and product_id and substitute_id:
             obj, created = CustomerProduct.objects.get_or_create(
-                customer=_user, product_id=product_id, substitute_id=substitute_id,
+                customer=_user,
+                product_id=product_id,
+                substitute_id=substitute_id,
             )
             if created:
                 messages.add_message(
