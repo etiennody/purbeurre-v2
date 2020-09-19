@@ -64,6 +64,8 @@ class Command(BaseCommand):
 
         # Process for products
         for category in self.get_populate_categories():
+            categ = Category.objects.get(name=category["name"])
+
             url_products = "https://fr.openfoodfacts.org/cgi/search.pl?"
             payload = {
                 "action": "process",
@@ -84,7 +86,7 @@ class Command(BaseCommand):
             products = json.loads(product_response.content)["products"]
             for product in products:
                 try:
-                    Product.objects.create(
+                    categ.product_set.create(
                         name=product.get("product_name"),
                         nutrition_grade=product.get("nutrition_grade_fr"),
                         energy_100g=product["nutriments"].get("energy_value"),
@@ -104,6 +106,10 @@ class Command(BaseCommand):
                         url=product.get("url"),
                         image_url=product.get("image_front_url")
                     )
+                    category_list = product.get("categories")
+                    for category_product in category_list.split(","):
+                        catego = Category.objects.get_or_create(name=category_product)
+                        product.categories.create(catego)
                 except Exception as exx:
                     print("Un des produits n'a pu être importé, voici l'erreur :", exx)
         self.stdout.write(self.style.SUCCESS("Data successfully downloaded !"))
