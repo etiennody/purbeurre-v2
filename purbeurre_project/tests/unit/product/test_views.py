@@ -131,6 +131,68 @@ class ProductTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["object_list"].count(), 0)
 
+    def test_valid_substitutes_query(self):
+        """Valid if sustitutes query works with added products categories
+        """
+        categ1 = Category.objects.create(name="category_a")
+        categ2 = Category.objects.create(name="category_b")
+        prod1 = Product.objects.create(
+                id=15,
+                name="Product 15",
+                nutrition_grade="d",
+                energy_100g="2",
+                energy_unit="gr",
+                carbohydrates_100g="2",
+                sugars_100g="2",
+                fat_100g="2",
+                saturated_fat_100g="2",
+                salt_100g="0.2",
+                sodium_100g="0.2",
+                fiber_100g="0.2",
+                proteins_100g="0.2",
+                image_url="http://www.test-product15.fr/product.jpg",
+                url="http://www.test-product15.fr",)
+        prod1.categories.add(categ1)
+        prod2 = Product.objects.create(
+                id=16,
+                name="Product 16",
+                nutrition_grade="a",
+                energy_100g="2",
+                energy_unit="gr",
+                carbohydrates_100g="2",
+                sugars_100g="2",
+                fat_100g="2",
+                saturated_fat_100g="2",
+                salt_100g="0.2",
+                sodium_100g="0.2",
+                fiber_100g="0.2",
+                proteins_100g="0.2",
+                image_url="http://www.test-product16.fr/product.jpg",
+                url="http://www.test-product16.fr",)
+        prod2.categories.add(categ1)
+        prod3 = Product.objects.create(
+                id=17,
+                name="Product 17",
+                nutrition_grade="e",
+                energy_100g="2",
+                energy_unit="gr",
+                carbohydrates_100g="2",
+                sugars_100g="2",
+                fat_100g="2",
+                saturated_fat_100g="2",
+                salt_100g="0.2",
+                sodium_100g="0.2",
+                fiber_100g="0.2",
+                proteins_100g="0.2",
+                image_url="http://www.test-product17.fr/product.jpg",
+                url="http://www.test-product17.fr",)
+        prod3.categories.add(categ2)
+        response = prod1.substitutes()
+        print(str(response.query))
+        self.assertIn(prod2, response)
+        self.assertNotIn(prod1, response)
+        self.assertNotIn(prod3, response)
+
     # details views
     def test_valid_product_detail_view(self):
         """Valid if product details uses the right url and template"""
@@ -381,7 +443,7 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
         current_url = self.driver.current_url
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
-        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/311694")
+        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/465776")
         self.assertIn("Résultats recherche substituts :: Purbeurre", self.driver.title)
         self.assertIn(
             "Vous pouvez remplacer cet aliment par :", self.driver.page_source
