@@ -79,8 +79,13 @@ def test_valid_one_category_populated(mocked_responses):
     )
     resp = requests.get("https://fr.openfoodfacts.org/categories.json")
     command = Command()
-    command.get_populate_categories()
+    selected = command.get_populate_categories()
     assert resp.status_code == 200
+    assert len(selected) == 2
+    assert selected[0]["name"] == "pate-a-tartiner"
+    assert selected[0]["products"] == 5002
+    assert selected[1]["name"] == "Fruits"
+    assert selected[1]["products"] == 5001
     assert Category.objects.filter(name="pate-a-tartiner").exists()
 
 
