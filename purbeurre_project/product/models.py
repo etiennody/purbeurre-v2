@@ -31,12 +31,32 @@ class Product(models.Model):
 
     def substitutes(self):
         return (
-            Product.objects.filter(categories__name=self.categories.first())
+            Product.objects.filter(categories=self.categories.first())
             .filter(nutrition_grade__lte=self.nutrition_grade)
             .exclude(id=self.id)
             .order_by("nutrition_grade", "energy_100g")
             .distinct("nutrition_grade", "energy_100g")
         )
+
+        # related_products = (
+        #     self.categories.through.objects.all()
+        #     .filter(
+        #         product__nutrition_grade__lte=self.nutrition_grade,
+        #         category__in=self.categories.all(),
+        #     )
+        #     .values("product_id")
+        #     .annotate(matches=models.Count("category_id"))
+        #     .filter(matches__gte=4)
+        #     .order_by("-matches")
+        #     .values_list("product_id")
+        # )
+
+        # return (
+        #     Product.objects.filter(pk__in=related_products)
+        #     .exclude(id=self.id)
+        #     .order_by("nutrition_grade", "energy_100g")
+        #     .distinct("nutrition_grade", "energy_100g")
+        # )
 
 
 class CustomerProduct(models.Model):
