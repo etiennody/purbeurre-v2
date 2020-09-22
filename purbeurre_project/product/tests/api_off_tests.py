@@ -137,6 +137,7 @@ def test_valid_one_product_populated(mocked_responses):
                     "nutrition_grade_fr": "a",
                     "url": "http://test.fr",
                     "image_front_url": "http://test.fr/test.jpg",
+                    "categories": "foo,bar",
                     "nutriments": {
                         "energy_value": "1",
                         "energy_unit": "gr",
@@ -172,6 +173,81 @@ def test_valid_one_product_populated(mocked_responses):
     assert resp_categories.status_code == 200
     assert resp_product.status_code == 200
     assert Product.objects.filter(name="test").exists()
+    product = Product.objects.get(name="test")
+    categ1 = Category.objects.get(name="foo")
+    categ2 = Category.objects.get(name="bar")
+    assert categ1 in product.categories.all()
+    assert categ2 in product.categories.all()
+
+
+@pytest.mark.django_db
+def test_valid_create_products():
+    """Valid create_products method with two categories for a product
+    """
+    command = Command()
+    command.create_products(
+        [
+            {
+                "product_name": "test",
+                "nutrition_grade_fr": "a",
+                "url": "http://test.fr",
+                "image_front_url": "http://test.fr/test.jpg",
+                "categories": "foo,bar",
+                "nutriments": {
+                    "energy_value": "1",
+                    "energy_unit": "gr",
+                    "carbohydrates_100g": "2",
+                    "sugars_100g": "2",
+                    "fat_100g": "2",
+                    "saturated-fat_100g": "2",
+                    "salt_100g": "2",
+                    "sodium_100g": "2",
+                    "fiber_100g": "2",
+                    "proteins_100g": "2",
+                },
+            }
+        ]
+    )
+    product = Product.objects.get(name="test")
+    categ1 = Category.objects.get(name="foo")
+    categ2 = Category.objects.get(name="bar")
+    assert categ1 in product.categories.all()
+    assert categ2 in product.categories.all()
+
+
+@pytest.mark.django_db
+def test_valid_existing_category():
+    """Valid create_products method if categories exist
+    """
+    command = Command()
+    command.create_products(
+        [
+            {
+                "product_name": "test",
+                "nutrition_grade_fr": "a",
+                "url": "http://test.fr",
+                "image_front_url": "http://test.fr/test.jpg",
+                "categories": "foo,bar",
+                "nutriments": {
+                    "energy_value": "1",
+                    "energy_unit": "gr",
+                    "carbohydrates_100g": "2",
+                    "sugars_100g": "2",
+                    "fat_100g": "2",
+                    "saturated-fat_100g": "2",
+                    "salt_100g": "2",
+                    "sodium_100g": "2",
+                    "fiber_100g": "2",
+                    "proteins_100g": "2",
+                },
+            }
+        ]
+    )
+    Product.objects.get(name="test")
+    Category.objects.get(name="foo")
+    Category.objects.get(name="bar")
+    assert Category.objects.filter(name="foo").exists()
+    assert Category.objects.filter(name="bar").exists()
 
 
 @responses.activate
