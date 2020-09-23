@@ -1,4 +1,4 @@
-"""Users App forms tests
+"""Unit tests for users app forms
 """
 from django.contrib.auth.models import User
 from django.test import TestCase

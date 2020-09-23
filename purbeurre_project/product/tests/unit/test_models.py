@@ -1,4 +1,4 @@
-"""Test models for product app
+"""Unit tests for product app models
 """
 from django.test import TestCase
 
