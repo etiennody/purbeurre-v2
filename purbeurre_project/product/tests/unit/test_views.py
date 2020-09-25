@@ -1,4 +1,4 @@
-"""Unit tests for product app views
+"""Integration tests for product app views
 """
 from django.contrib.auth.models import User
 from django.test import SimpleTestCase, TestCase
@@ -28,7 +28,6 @@ class ProductTest(TestCase):
         user.save()
 
         Category.objects.create(name="Categorie test")
-
         number_of_products = 13
         for product in range(number_of_products):
             Product.objects.create(
@@ -91,17 +90,15 @@ class ProductTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "product/substitute_results.html")
 
-    def test_valid_substitute_better_nutriscore_or_equivalent_and_exclude_id(self):
+    def test_valid_substitute_exclude_id(self):
         """
-        Valid if substitute results offers a better product or equivalent
-        and exclude the searched product id
+        Valid if substitute results exclude the searched product id
         """
         response = self.client.get(reverse("substitute", args=["3"]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["object_list"].count(), 1)
-        if not Product.objects.get(id=3) in response.context_data["object_list"]:
-            exclude_id = True
-        self.assertTrue(exclude_id)
+        self.assertNotIn(
+            Product.objects.get(id=3), response.context_data["object_list"]
+        )
 
     def test_valid_substitute_without_products(self):
         """Valid if substitute results can have any products"""
@@ -125,68 +122,6 @@ class ProductTest(TestCase):
         response = self.client.get(reverse("substitute", args=[healthy_product.id]))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["object_list"].count(), 0)
-
-    def test_valid_substitutes_query(self):
-        """Valid if sustitutes query works with added products categories
-        """
-        categ1 = Category.objects.create(name="category_a")
-        categ2 = Category.objects.create(name="category_b")
-        prod1 = Product.objects.create(
-                id=15,
-                name="Product 15",
-                nutrition_grade="d",
-                energy_100g="2",
-                energy_unit="gr",
-                carbohydrates_100g="2",
-                sugars_100g="2",
-                fat_100g="2",
-                saturated_fat_100g="2",
-                salt_100g="0.2",
-                sodium_100g="0.2",
-                fiber_100g="0.2",
-                proteins_100g="0.2",
-                image_url="http://www.test-product15.fr/product.jpg",
-                url="http://www.test-product15.fr",)
-        prod1.categories.add(categ1)
-        prod2 = Product.objects.create(
-                id=16,
-                name="Product 16",
-                nutrition_grade="a",
-                energy_100g="2",
-                energy_unit="gr",
-                carbohydrates_100g="2",
-                sugars_100g="2",
-                fat_100g="2",
-                saturated_fat_100g="2",
-                salt_100g="0.2",
-                sodium_100g="0.2",
-                fiber_100g="0.2",
-                proteins_100g="0.2",
-                image_url="http://www.test-product16.fr/product.jpg",
-                url="http://www.test-product16.fr",)
-        prod2.categories.add(categ1)
-        prod3 = Product.objects.create(
-                id=17,
-                name="Product 17",
-                nutrition_grade="e",
-                energy_100g="2",
-                energy_unit="gr",
-                carbohydrates_100g="2",
-                sugars_100g="2",
-                fat_100g="2",
-                saturated_fat_100g="2",
-                salt_100g="0.2",
-                sodium_100g="0.2",
-                fiber_100g="0.2",
-                proteins_100g="0.2",
-                image_url="http://www.test-product17.fr/product.jpg",
-                url="http://www.test-product17.fr",)
-        prod3.categories.add(categ2)
-        response = prod1.substitutes()
-        print(str(response.query))
-        self.assertIn(prod2, response)
-        self.assertNotIn(prod1, response)
-        self.assertNotIn(prod3, response)
 
     # details views
     def test_valid_product_detail_view(self):

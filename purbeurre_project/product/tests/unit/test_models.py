@@ -77,7 +77,7 @@ class CategoryModelTest(TestCase):
         """Test if two categories can have a product"""
         product = Product.objects.create(
             id="1",
-            name="Nutella",
+            name="Product",
             nutrition_grade="a",
             energy_100g="2",
             energy_unit="gr",
@@ -89,10 +89,146 @@ class CategoryModelTest(TestCase):
             sodium_100g="0.2",
             fiber_100g="0.2",
             proteins_100g="0.2",
-            image_url="http://www.test.fr",
+            image_url="http://www.test-product.fr/product.jpg",
+            url="http://www.test-product.fr",
         )
         category1 = Category.objects.create(name="Category1")
         category2 = Category.objects.create(name="Category2")
         category1.product_set.add(product)
         category2.product_set.add(product)
         self.assertEqual(product.categories.count(), 2)
+
+
+class ProductSubstituteTest(TestCase):
+    """Test substitute method in Product Model
+
+    Args:
+        TestCase (subclass): confirm test classes as subclasses of django.test.TestCase
+    """
+
+    def test_valid_substitutes_query(self):
+        """Valid if sustitutes query works with added products categories"""
+        categ1 = Category.objects.create(name="category_a")
+        categ2 = Category.objects.create(name="category_b")
+        prod1 = Product.objects.create(
+            name="Product 15",
+            nutrition_grade="d",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product15.fr/product.jpg",
+            url="http://www.test-product15.fr",
+        )
+        categ1.product_set.add(prod1)
+        categ2.product_set.add(prod1)
+        prod2 = Product.objects.create(
+            name="Product 16",
+            nutrition_grade="a",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product16.fr/product.jpg",
+            url="http://www.test-product16.fr",
+        )
+        categ1.product_set.add(prod2)
+        categ2.product_set.add(prod2)
+        prod3 = Product.objects.create(
+            name="Product 17",
+            nutrition_grade="e",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product17.fr/product.jpg",
+            url="http://www.test-product17.fr",
+        )
+        prod3.categories.add(categ1)
+        response = prod1.substitutes(nb_common_categories=2)
+        print(str(response.query))
+        self.assertEqual(response.count(), 1)
+        self.assertEqual(list(response), [prod2])
+
+    def test_invalid_substitutes_query(self):
+        """Valid if sustitutes query return any product"""
+        categ1 = Category.objects.create(name="category_a")
+        categ2 = Category.objects.create(name="category_b")
+        prod1 = Product.objects.create(
+            id="15",
+            name="Product 15",
+            nutrition_grade="d",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product15.fr/product.jpg",
+            url="http://www.test-product15.fr",
+        )
+        categ1.product_set.add(prod1)
+        categ2.product_set.add(prod1)
+        prod2 = Product.objects.create(
+            id="16",
+            name="Product 16",
+            nutrition_grade="a",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product16.fr/product.jpg",
+            url="http://www.test-product16.fr",
+        )
+        categ1.product_set.add(prod2)
+        categ2.product_set.add(prod2)
+        prod3 = Product.objects.create(
+            id="17",
+            name="Product 17",
+            nutrition_grade="e",
+            energy_100g="2",
+            energy_unit="gr",
+            carbohydrates_100g="2",
+            sugars_100g="2",
+            fat_100g="2",
+            saturated_fat_100g="2",
+            salt_100g="0.2",
+            sodium_100g="0.2",
+            fiber_100g="0.2",
+            proteins_100g="0.2",
+            image_url="http://www.test-product17.fr/product.jpg",
+            url="http://www.test-product17.fr",
+        )
+        categ2.product_set.add(prod3)
+        response = prod2.substitutes(nb_common_categories=2)
+        print(str(response.query))
+        self.assertEqual(response.count(), 0)
+        self.assertEqual(list(response), [])
