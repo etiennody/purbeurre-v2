@@ -10,6 +10,7 @@ class Category(models.Model):
     Args:
         models (subclass): a python class that subclasses django.db.models.Model
     """
+
     name = models.TextField(null=False, unique=True)
 
     def __str__(self):
@@ -22,6 +23,7 @@ class Product(models.Model):
     Args:
         models (subclass): a python class that subclasses django.db.models.Model
     """
+
     name = models.TextField(null=False, unique=True)
     nutrition_grade = models.CharField(max_length=1)
     energy_100g = models.IntegerField()
@@ -79,6 +81,7 @@ class CustomerProduct(models.Model):
     Args:
         models (subclass): a python class that subclasses django.db.models.Model
     """
+
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(
         Product, related_name="wanted", on_delete=models.CASCADE
