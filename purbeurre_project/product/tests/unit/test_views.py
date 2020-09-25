@@ -28,6 +28,7 @@ class ProductTest(TestCase):
         user.save()
 
         Category.objects.create(name="Categorie test")
+
         number_of_products = 13
         for product in range(number_of_products):
             Product.objects.create(
