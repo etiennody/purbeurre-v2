@@ -1,3 +1,5 @@
+"""URLconf to process home page and terms of service using TemplateView
+"""
 from django.urls import path
 from django.views.generic import TemplateView
 

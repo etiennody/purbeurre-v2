@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-PURBEURRE_SECRETKEY = os.environ['PURBEURRE_SECRETKEY']
+PURBEURRE_SECRETKEY = os.environ.get('PURBEURRE_SECRETKEY')
 SECRET_KEY = PURBEURRE_SECRETKEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'purbeurre_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-PURBEURRE_DBNAME = os.environ['PURBEURRE_DBNAME']
-PURBEURRE_DBUSER = os.environ['PURBEURRE_DBUSER']
-PURBEURRE_DBPASSWD = os.environ['PURBEURRE_DBPASSWD']
+PURBEURRE_DBNAME = os.environ.get('PURBEURRE_DBNAME')
+PURBEURRE_DBUSER = os.environ.get('PURBEURRE_DBUSER')
+PURBEURRE_DBPASSWD = os.environ.get('PURBEURRE_DBPASSWD')
 
 DATABASES = {
     'default': {
