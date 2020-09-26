@@ -44,7 +44,7 @@ class Command(BaseCommand):
             )
         categories = json.loads(category_response.content)["tags"]
         categories_selected = [
-            categ for categ in categories if categ["products"] >= 5000
+            categ for categ in categories if categ["products"] >= 3000
         ]
         for category in categories_selected:
             try:
