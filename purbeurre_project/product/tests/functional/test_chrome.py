@@ -70,7 +70,7 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
         current_url = self.driver.current_url
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
-        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/761236")
+        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/788894")
         self.assertIn("Résultats recherche substituts :: Purbeurre", self.driver.title)
         self.assertIn(
             "Vous pouvez remplacer cet aliment par :", self.driver.page_source
