@@ -11,8 +11,17 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from os.path import dirname, join, realpath
+from sys import path
 
 import django_heroku
+
+ROOT = realpath(join(dirname(__file__)))
+
+path[0:0] = [
+    join(ROOT, "apps"),
+]
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +31,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-PURBEURRE_SECRETKEY = os.environ.get("PURBEURRE_SECRETKEY")
+PURBEURRE_SECRETKEY = os.environ.get(
+    "PURBEURRE_SECRETKEY", "dslmfhjdslqmafbxqlfmdhsqlkjhpuhjvnt"
+)
 SECRET_KEY = PURBEURRE_SECRETKEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -133,8 +144,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

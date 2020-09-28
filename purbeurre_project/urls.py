@@ -19,9 +19,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
-from pages import views as pages_views
-from product import views as product_views
-from users import views as user_view
+from .apps.pages import views as pages_views
+from .apps.product import views as product_views
+from .apps.users import views as user_view
 
 urlpatterns = [
     path("", pages_views.home, name="home"),

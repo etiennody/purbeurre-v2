@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
-from .models import CustomerProduct, Product
+from product.models import CustomerProduct, Product
 
 
 class SearchResultsView(ListView):
