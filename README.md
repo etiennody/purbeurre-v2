@@ -49,7 +49,7 @@ To run this application locally:
     python manage.py import_off
     ```
 
-* Run the GrandPy Bot application:
+* Run Pur Beurre application:
     ````
     python manage.py runserver
 
