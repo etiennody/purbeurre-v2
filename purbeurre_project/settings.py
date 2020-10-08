@@ -14,8 +14,6 @@ import os
 from os.path import dirname, join, realpath
 from sys import path
 
-import django_heroku
-
 ROOT = realpath(join(dirname(__file__)))
 
 path[0:0] = [
@@ -39,7 +37,7 @@ SECRET_KEY = PURBEURRE_SECRETKEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
-ALLOWED_HOSTS = ["purbeurre-subs-info.herokuapps.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -156,6 +154,3 @@ LOGIN_REDIRECT_URL = "home"
 LOGIN_URL = "login"
 
 INTERNAL_IPS = ["127.0.0.1"]
-
-if os.environ.get("ENV", "development") == "production":
-    django_heroku.settings(locals())
