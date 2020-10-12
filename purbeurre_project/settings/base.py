@@ -25,21 +25,6 @@ path[0:0] = [
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-PURBEURRE_SECRETKEY = os.environ.get(
-    "PURBEURRE_SECRETKEY", "dslmfhjdslqmafbxqlfmdhsqlkjhpuhjvnt"
-)
-SECRET_KEY = PURBEURRE_SECRETKEY
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.environ.get("ENV", "development") == "production" else True
-
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -85,25 +70,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "purbeurre_project.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-PURBEURRE_DBNAME = os.environ.get("PURBEURRE_DBNAME")
-PURBEURRE_DBUSER = os.environ.get("PURBEURRE_DBUSER")
-PURBEURRE_DBPASSWD = os.environ.get("PURBEURRE_DBPASSWD")
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": PURBEURRE_DBNAME,
-        "USER": PURBEURRE_DBUSER,
-        "PASSWORD": PURBEURRE_DBPASSWD,
-        "HOST": "localhost",
-        "PORT": 5432,
-    }
-}
 
 
 # Password validation
