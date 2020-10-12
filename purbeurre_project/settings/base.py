@@ -14,7 +14,7 @@ import os
 from os.path import dirname, join, realpath
 from sys import path
 
-ROOT = realpath(join(dirname(__file__)))
+ROOT = realpath(join(dirname(__file__), ".."))
 
 path[0:0] = [
     join(ROOT, "apps"),
@@ -28,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Application definition
 
 INSTALLED_APPS = [
-    "pages.apps.PagesConfig",
-    "users.apps.UsersConfig",
-    "product.apps.ProductConfig",
+    "pages",
+    "users",
+    "product",
     "crispy_forms",
     "django.contrib.admin",
     "django.contrib.auth",
