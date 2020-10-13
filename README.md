@@ -40,6 +40,7 @@ To run this application locally:
 
 
 * Add and update this information in environment variables file named .env in root directory:
+    * ENV=local
     * PURBEURRE_DBNAME=yourpurbeurre_dbname
     * PURBEURRE_DBUSER=yourpurbeurre_dbuser
     * PURBEURRE_DBPASSWD=yourpurbeurre_dbpassword
