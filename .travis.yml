@@ -8,9 +8,9 @@ branches:
 
 before_script:
   - pip install pipenv
-  - pipenv install
+  - pipenv install --dev
 
-env: DJANGO_SETTINGS_MODULE="disquaire_project.settings"
+env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
 services:
   - postgresql
