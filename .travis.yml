@@ -1,0 +1,23 @@
+language: python
+python:
+  - '3.8'
+
+branches:
+  only:
+    - staging
+
+before_script:
+  - pip install pipenv
+  - pipenv install
+
+env: DJANGO_SETTINGS_MODULE="disquaire_project.settings"
+
+services:
+  - postgresql
+
+script:
+  - coverage run --source="." ./manage.py test purbeurre_project/apps/
+
+after_success:
+  - cd purbeurre_project/
+  - pytest -vv
