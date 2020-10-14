@@ -23,7 +23,7 @@ To run this application locally:
 
 * Clone / create the application repository:
     ```
-    git clone https://github.com/etiennody/purbeurre.git && cd purbeure_project 
+    git clone https://github.com/etiennody/purbeurre.git && cd purbeure-v2
     ````
 
 * Install the requirements:

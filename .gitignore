@@ -1,5 +1,6 @@
 # production settings
 purbeurre_project/settings/prod.py
+purbeurre_project/staticfiles/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
