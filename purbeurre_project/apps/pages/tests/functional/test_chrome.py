@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.options import Options
 from product.models import Category, Product
 
 
-@unittest.skip("homepage class skipping")
 class HomepageSeleniumTest(unittest.TestCase):
     """Homepage functional test with selenium
 
