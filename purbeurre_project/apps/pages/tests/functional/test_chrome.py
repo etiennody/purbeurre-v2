@@ -48,7 +48,7 @@ class HomepageSeleniumTest(unittest.TestCase):
         Raises:
             Exception: message to inform access is denied on homepage
         """
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get("https://purbeurre.etiennody.fr/")
         if not "Accueil :: Purbeurre" in self.driver.title:
             raise Exception("Unable to load purbeurre homepage!")
         self.assertIn("Accueil :: Purbeurre", self.driver.title)

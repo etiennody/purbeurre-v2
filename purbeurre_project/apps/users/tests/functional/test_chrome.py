@@ -19,13 +19,15 @@ class RegisterSeleniumTest(unittest.TestCase):
     def setUp(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--remote-debugging-port=9222')
+        chrome_options.add_argument('--window-size=1920x1080')
         self.driver = webdriver.Chrome(chrome_options=chrome_options
         )
 
     def test_valid_live_register_page(self):
         """Validate data entries on the registration page"""
-        self.driver.get("http://127.0.0.1:8000/register/")
+        self.driver.get("https://purbeurre.etiennody.fr/register/")
         print(self.driver.title)
         username = self.driver.find_element_by_id("id_username")
         first_name = self.driver.find_element_by_id("id_first_name")
@@ -50,7 +52,7 @@ class RegisterSeleniumTest(unittest.TestCase):
         current_url = self.driver.current_url
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
-        self.assertEqual(current_url, "http://127.0.0.1:8000/register")
+        self.assertEqual(current_url, "https://purbeurre.etiennody.fr/register")
         self.assertIn("Vous avez déjà un compte ?", self.driver.page_source)
         self.assertTrue(User.objects.filter(username="BobRobert").exists())
 
@@ -68,7 +70,9 @@ class LoginSeleniumTest(unittest.TestCase):
     def setUp(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--remote-debugging-port=9222')
+        chrome_options.add_argument('--window-size=1920x1080')
         self.driver = webdriver.Chrome(chrome_options=chrome_options
         )
         user = User.objects.create(
@@ -83,7 +87,7 @@ class LoginSeleniumTest(unittest.TestCase):
 
     def test_valid_live_login_page(self):
         """Validate data entries on the login page"""
-        self.driver.get("http://127.0.0.1:8000/login/")
+        self.driver.get("https://purbeurre.etiennody.fr/login/")
         print(self.driver.title)
         username = self.driver.find_element_by_id("id_username")
         password = self.driver.find_element_by_id("id_password")
@@ -98,7 +102,7 @@ class LoginSeleniumTest(unittest.TestCase):
         current_url = self.driver.current_url
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
-        self.assertEqual(current_url, "http://127.0.0.1:8000")
+        self.assertEqual(current_url, "https://purbeurre.etiennody.fr")
         self.assertIn("Accueil :: Purbeurre", self.driver.title)
 
     def tearDown(self):

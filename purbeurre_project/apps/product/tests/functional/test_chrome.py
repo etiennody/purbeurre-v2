@@ -27,7 +27,7 @@ class SearchResultsPageSeleniumTest(unittest.TestCase):
         Raises:
             Exception: message to inform access is denied on search results page
         """
-        self.driver.get("http://127.0.0.1:8000/search/?q=nutella")
+        self.driver.get("https://purbeurre.etiennody.fr/search/?q=nutella")
         if not "Résultats recherche produits :: Purbeurre" in self.driver.title:
             raise Exception("Unable to load purbeurre search results page!")
         self.assertIn("Résultats recherche produits :: Purbeurre", self.driver.title)
@@ -53,14 +53,14 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
 
     def test_valid_live_substitute_results_page(self):
         """Valid substitute results page"""
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get("https://purbeurre.etiennody.fr/")
         text = self.driver.find_element_by_id("inputSearchForm")
         submit = self.driver.find_element_by_class_name("btn")
         time.sleep(5)
         self.driver.implicitly_wait(5)
         text.send_keys("product")
         submit.click()
-        self.driver.get("http://127.0.0.1:8000/search?q=nutella")
+        self.driver.get("https://purbeurre.etiennody.fr/search?q=nutella")
         product = self.driver.find_element_by_class_name("get-more")
         time.sleep(5)
         self.driver.implicitly_wait(5)
@@ -68,7 +68,7 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
         current_url = self.driver.current_url
         if (self.driver.current_url[len(self.driver.current_url) - 1]) == "/":
             current_url = self.driver.current_url[:-1]
-        self.assertEqual(current_url, "http://127.0.0.1:8000/substitute/788894")
+        self.assertEqual(current_url, "https://purbeurre.etiennody.fr/substitute/6014")
         self.assertIn("Résultats recherche substituts :: Purbeurre", self.driver.title)
         self.assertIn(
             "Vous pouvez remplacer cet aliment par :", self.driver.page_source
