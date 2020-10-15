@@ -1,14 +1,26 @@
+dist : focal fossa
 language: python
 python:
   - '3.8'
+
+addons:
+  # ajouter uniquement les navigateurs utilisés
+  chrome: stable
 
 branches:
   only:
     - staging
 
-before_script:
+install:
   - pip install pipenv
   - pipenv install --dev
+
+before_script:
+CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
+wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+unzip ~/chromedriver_linux64.zip -d ~/
+rm ~/chromedriver_linux64.zip
+sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
