@@ -21,6 +21,8 @@ before_script:
   - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
   - export PATH="$PATH:/usr/local/bin/chromedriver"
+  - sudo chown root:root /usr/local/bin/chromedriver
+  - sudo chmod 0755 /usr/local/bin/chromedriver
 
 services:
   - postgresql
