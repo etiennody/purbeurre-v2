@@ -53,7 +53,6 @@ To run this application locally:
 * Run Pur Beurre application:
     ````
     python manage.py runserver
-
     ````
 
 * Launch Django server:
