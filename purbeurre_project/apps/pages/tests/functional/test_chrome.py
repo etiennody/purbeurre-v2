@@ -19,8 +19,7 @@ class HomepageSeleniumTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome(
-            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        self.driver = webdriver.Chrome(chrome_options=chrome_options
         )
         Category.objects.create(name="test")
         number_of_products = 12

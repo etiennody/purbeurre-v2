@@ -18,8 +18,7 @@ class SearchResultsPageSeleniumTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome(
-            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        self.driver = webdriver.Chrome(chrome_options=chrome_options
         )
 
     def test_valid_live_search_results_page_title__and_product_present(self):
@@ -49,8 +48,7 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome(
-            "/usr/local/bin/chromedriver", chrome_options=chrome_options
+        self.driver = webdriver.Chrome(chrome_options=chrome_options
         )
 
     def test_valid_live_substitute_results_page(self):
