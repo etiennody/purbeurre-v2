@@ -5,6 +5,7 @@ import unittest
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
 
 class SearchResultsPageSeleniumTest(unittest.TestCase):
@@ -58,14 +59,14 @@ class SubstituteResultsPageSeleniumTest(unittest.TestCase):
     def test_valid_live_substitute_results_page(self):
         """Valid substitute results page"""
         self.driver.get("https://purbeurre.etiennody.fr/")
-        text = self.driver.find_element_by_id("inputSearchForm")
-        submit = self.driver.find_element_by_class_name("btn")
+        text = self.driver.find_element(By.ID, "inputSearchForm")
+        submit = self.driver.find_element(By.CLASS_NAME, "btn")
         time.sleep(5)
         self.driver.implicitly_wait(5)
         text.send_keys("product")
         submit.click()
         self.driver.get("https://purbeurre.etiennody.fr/search?q=nutella")
-        product = self.driver.find_element_by_class_name("get-more")
+        product = self.driver.find_element(By.CLASS_NAME, "get-more")
         time.sleep(5)
         self.driver.implicitly_wait(5)
         product.click()

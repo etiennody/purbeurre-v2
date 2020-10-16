@@ -6,6 +6,7 @@ import unittest
 from django.contrib.auth.models import User
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
@@ -29,13 +30,13 @@ class RegisterSeleniumTest(unittest.TestCase):
         """Validate data entries on the registration page"""
         self.driver.get("https://purbeurre.etiennody.fr/register/")
         print(self.driver.title)
-        username = self.driver.find_element_by_id("id_username")
-        first_name = self.driver.find_element_by_id("id_first_name")
-        last_name = self.driver.find_element_by_id("id_last_name")
-        email = self.driver.find_element_by_id("id_email")
-        password1 = self.driver.find_element_by_id("id_password1")
-        password2 = self.driver.find_element_by_id("id_password2")
-        submit = self.driver.find_element_by_class_name("btn")
+        username = self.driver.find_element(By.ID, "id_username")
+        first_name = self.driver.find_element(By.ID, "id_first_name")
+        last_name = self.driver.find_element(By.ID, "id_last_name")
+        email = self.driver.find_element(By.ID, "id_email")
+        password1 = self.driver.find_element(By.ID, "id_password1")
+        password2 = self.driver.find_element(By.ID, "id_password2")
+        submit = self.driver.find_element(By.CLASS_NAME, "btn")
         time.sleep(5)
         self.driver.implicitly_wait(5)
         username.send_keys("BobRobert")
@@ -89,9 +90,9 @@ class LoginSeleniumTest(unittest.TestCase):
         """Validate data entries on the login page"""
         self.driver.get("https://purbeurre.etiennody.fr/login/")
         print(self.driver.title)
-        username = self.driver.find_element_by_id("id_username")
-        password = self.driver.find_element_by_id("id_password")
-        submit = self.driver.find_element_by_id("submit-button")
+        username = self.driver.find_element(By.ID, "id_username")
+        password = self.driver.find_element(By.ID, "id_password")
+        submit = self.driver.find_element(By.ID, "submit-button")
         username.send_keys("BobRobert")
         password.send_keys("fglZfYmr%?,")
         submit.send_keys(Keys.RETURN)
