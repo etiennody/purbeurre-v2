@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 
-@unittest.skip("SearchResultsPage class skipping")
 class SearchResultsPageSeleniumTest(unittest.TestCase):
     """Search results functional test with selenium
 
@@ -41,7 +40,6 @@ class SearchResultsPageSeleniumTest(unittest.TestCase):
         self.driver.close()
 
 
-@unittest.skip("SubstituteResultsPage class skipping")
 class SubstituteResultsPageSeleniumTest(unittest.TestCase):
     """Substitute result functional test with selenium
 

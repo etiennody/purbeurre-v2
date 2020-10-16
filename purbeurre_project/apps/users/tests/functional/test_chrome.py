@@ -10,7 +10,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
-@unittest.skip("Register class skipping")
 class RegisterSeleniumTest(unittest.TestCase):
     """Register functional test with selenium
 
@@ -62,7 +61,6 @@ class RegisterSeleniumTest(unittest.TestCase):
         self.driver.close()
 
 
-@unittest.skip("Login class skipping")
 class LoginSeleniumTest(unittest.TestCase):
     """Login functional test with selenium
 
