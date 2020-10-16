@@ -27,10 +27,8 @@ services:
   - postgresql
 
 script:
-  - coverage run --source=".." ./manage.py test
-  - cd purbeurre_project/
-  - coverage run --source="apps/product/management" -m pytest -vv
+  - coverage run -a --source=".." ./manage.py test
+  - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv
 
 after_sucess:
-  - COVERALLS_PARALLEL=true
   - coveralls
