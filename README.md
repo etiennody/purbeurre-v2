@@ -1,4 +1,8 @@
 # Purbeurre
+[![Build Status](https://travis-ci.com/etiennody/purbeurre-v2.svg?branch=staging)](https://travis-ci.com/etiennody/purbeurre-v2)
+
+[![Coverage Status](https://coveralls.io/repos/github/etiennody/purbeurre-v2/badge.svg?branch=staging)](https://coveralls.io/github/etiennody/purbeurre-v2?branch=staging)
+
 App built for project 10 in Python developer path at Openclassrooms.
 
 The startup Pur Beurre wants to develop a web platform for its customers. This site will allow anyone to find a healthy substitute for a food considered "Too fat, too sweet, too salty".
