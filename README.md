@@ -1,9 +1,10 @@
 # Purbeurre
-App built for project 8 in Python developer path at Openclassrooms.
+App built for project 10 in Python developer path at Openclassrooms.
 
 The startup Pur Beurre wants to develop a web platform for its customers. This site will allow anyone to find a healthy substitute for a food considered "Too fat, too sweet, too salty".
 
 ## Online application
+https://www.purbeurre.etiennody.fr
 
 ## Requirements
 * Python 3
@@ -24,7 +25,7 @@ To run this application locally:
 * Clone / create the application repository:
     ```
     git clone https://github.com/etiennody/purbeurre.git && cd purbeure-v2
-    ````
+    ```
 
 * Install the requirements:
     ```
