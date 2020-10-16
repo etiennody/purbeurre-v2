@@ -13,6 +13,7 @@ branches:
 install:
   - pip install pipenv
   - pipenv install --dev
+  - pipenv install coveralls --dev
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
@@ -27,7 +28,9 @@ services:
 
 script:
   - coverage run --source="." ./manage.py test purbeurre_project/apps/
-
-after_success:
   - cd purbeurre_project/
-  - pytest -vv
+  - coverage run -m pytest -vv
+
+after_sucess:
+  - COVERALLS_PARALLEL=true
+  - coveralls
