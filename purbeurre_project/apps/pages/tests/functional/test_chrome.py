@@ -2,27 +2,26 @@
 """
 import unittest
 
+from django.test import LiveServerTestCase
+from product.models import Category, Product
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from product.models import Category, Product
 
-
-class HomepageSeleniumTest(unittest.TestCase):
+class HomepageSeleniumTest(LiveServerTestCase):
     """Homepage functional test with selenium
 
     Args:
-        unittest (module): core framework classes that form the basis of specific test cases
+        LiveServerTestCase (class): Do basically the same as TransactionTestCase but also launch a live HTTP server in a separate thread so that the tests use another testing framework, as Selenium, instead of the built-in dummy client.
     """
 
     def setUp(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--remote-debugging-port=9222')
-        chrome_options.add_argument('--window-size=1920x1080')
-        self.driver = webdriver.Chrome(chrome_options=chrome_options
-        )
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--remote-debugging-port=9222")
+        chrome_options.add_argument("--window-size=1920x1080")
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
         Category.objects.create(name="test")
         number_of_products = 12
         for product in range(number_of_products):
@@ -50,7 +49,7 @@ class HomepageSeleniumTest(unittest.TestCase):
         Raises:
             Exception: message to inform access is denied on homepage
         """
-        self.driver.get("https://purbeurre.etiennody.fr/")
+        self.driver.get("%s" % (self.live_server_url))
         if not "Accueil :: Purbeurre" in self.driver.title:
             raise Exception("Unable to load purbeurre homepage!")
         self.assertIn("Accueil :: Purbeurre", self.driver.title)

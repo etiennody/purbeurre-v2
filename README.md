@@ -28,7 +28,7 @@ To run this application locally:
 
 * Clone / create the application repository:
     ```
-    git clone https://github.com/etiennody/purbeurre.git && cd purbeure-v2
+    git clone https://github.com/etiennody/purbeurre.git && cd purbeurre-v2
     ```
 
 * Install the requirements:
@@ -56,9 +56,9 @@ To run this application locally:
     ```
 
 * Run Pur Beurre application:
-    ````
+    ```
     python manage.py runserver
-    ````
+    ```
 
 * Launch Django server:
 You can visit localhost at https://127.0.0.1:8000/
