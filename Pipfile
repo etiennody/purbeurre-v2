@@ -12,6 +12,7 @@ ipdb = "*"
 selenium = "*"
 pytest-django = "*"
 responses = "*"
+coveralls = "*"
 
 [packages]
 django = "*"
