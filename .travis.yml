@@ -1,23 +1,34 @@
+dist : focal
 language: python
 python:
   - '3.8'
+
+addons:
+  chrome: stable
 
 branches:
   only:
     - staging
 
-before_script:
+install:
   - pip install pipenv
   - pipenv install --dev
+  - pipenv install coveralls --dev
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
+
+before_script:
+  - CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
+  - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+  - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
+  - export PATH="$PATH:/usr/local/bin/chromedriver"
 
 services:
   - postgresql
 
 script:
-  - coverage run --source="." ./manage.py test purbeurre_project/apps/
+  - coverage run -a --source=".." ./manage.py test
+  - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv
 
-after_success:
-  - cd purbeurre_project/
-  - pytest -vv
+after_sucess:
+  - coveralls

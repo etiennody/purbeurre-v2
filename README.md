@@ -1,9 +1,14 @@
 # Purbeurre
-App built for project 8 in Python developer path at Openclassrooms.
+[![Build Status](https://travis-ci.com/etiennody/purbeurre-v2.svg?branch=staging)](https://travis-ci.com/etiennody/purbeurre-v2)
+
+[![Coverage Status](https://coveralls.io/repos/github/etiennody/purbeurre-v2/badge.svg?branch=staging)](https://coveralls.io/github/etiennody/purbeurre-v2?branch=staging)
+
+App built for project 10 in Python developer path at Openclassrooms.
 
 The startup Pur Beurre wants to develop a web platform for its customers. This site will allow anyone to find a healthy substitute for a food considered "Too fat, too sweet, too salty".
 
 ## Online application
+https://www.purbeurre.etiennody.fr
 
 ## Requirements
 * Python 3
@@ -23,8 +28,8 @@ To run this application locally:
 
 * Clone / create the application repository:
     ```
-    git clone https://github.com/etiennody/purbeurre.git && cd purbeure-v2
-    ````
+    git clone https://github.com/etiennody/purbeurre.git && cd purbeurre-v2
+    ```
 
 * Install the requirements:
     ```
@@ -51,10 +56,9 @@ To run this application locally:
     ```
 
 * Run Pur Beurre application:
-    ````
+    ```
     python manage.py runserver
-
-    ````
+    ```
 
 * Launch Django server:
 You can visit localhost at https://127.0.0.1:8000/
