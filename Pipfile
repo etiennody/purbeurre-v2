@@ -10,6 +10,8 @@ pylint-django = "*"
 coverage = "*"
 ipdb = "*"
 selenium = "*"
+pytest-django = "*"
+responses = "*"
 
 [packages]
 django = "*"
@@ -18,9 +20,8 @@ django-crispy-forms = "*"
 pillow = "*"
 requests = "*"
 django-extensions = "*"
-responses = "*"
-pytest-django = "*"
 gunicorn = "*"
+sentry-sdk = "*"
 
 [requires]
 python_version = "3.8"
