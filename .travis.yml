@@ -1,29 +1,26 @@
-dist : focal
 language: python
 python:
   - '3.8'
 
 addons:
   chrome: stable
-
-branches:
-  only:
-    - staging
+ 
+services:
+  - postgresql
 
 install:
   - pip install pipenv
   - pipenv install --dev
 
-env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
+env:
+  - DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
 before_script:
   - CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
   - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
   - export PATH="$PATH:/usr/local/bin/chromedriver"
-
-services:
-  - postgresql
+  - psql -c 'create database test_db;' -U postgres
 
 script:
   - coverage run -a --source=".." ./manage.py test

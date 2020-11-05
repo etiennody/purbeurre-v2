@@ -5,7 +5,7 @@ SECRET_KEY = "x5`4/@wh!=ZRu%&fcA{lrSaV"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "",
+        "NAME": "test_db",
         "USER": "postgres",
         "PASSWORD": "",
         "HOST": "",
