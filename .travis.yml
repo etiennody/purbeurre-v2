@@ -1,4 +1,4 @@
-dist : focal
+dist: focal
 language: python
 python:
   - '3.8'
@@ -18,7 +18,9 @@ install:
   - pip install pipenv
   - pipenv install --dev
 
-env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
+env:
+  - DJANGO_VERSION=3.1.2
+  - DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
 before_script:
   - CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
@@ -27,8 +29,8 @@ before_script:
   - export PATH="$PATH:/usr/local/bin/chromedriver"
 
 script:
-  - coverage run -a --source=".." ./manage.py test
-  - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv
+  - coverage run -a --source=".." ./manage.py test --noinput --settings=purbeurre_project.settings.ci
+  - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv --noinput --settings=purbeurre_project.settings.ci
 
 after_sucess:
   - coveralls
