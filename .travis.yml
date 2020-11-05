@@ -6,6 +6,11 @@ python:
 addons:
   chrome: stable
 
+branches:
+  only:
+    - master
+    - staging
+
 install:
   - pip install pipenv
   - pipenv sync
