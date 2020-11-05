@@ -13,7 +13,7 @@ branches:
 
 install:
   - pip install pipenv
-  - pipenv sync
+  - pipenv install --ignore-pipfile
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
@@ -27,7 +27,6 @@ services:
   - postgresql
 
 script:
-  - . /home/etiennody/.local/share/virtualenvs/purbeurre-xPbW4kZb/bin/activate
   - coverage run -a --source=".." ./manage.py test
   - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv
 
