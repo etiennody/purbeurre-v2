@@ -22,12 +22,12 @@ before_script:
   - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
   - export PATH="$PATH:/usr/local/bin/chromedriver"
-  - pipenv shell
 
 services:
   - postgresql
 
 script:
+  - . /home/etiennody/.local/share/virtualenvs/purbeurre-xPbW4kZb/bin/activate
   - coverage run -a --source=".." ./manage.py test
   - coverage run -a --source="purbeurre_project/apps/product/management" -m pytest -vv
 
