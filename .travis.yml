@@ -10,6 +10,9 @@ branches:
   only:
     - master
     - staging
+ 
+services:
+  - postgresql
 
 install:
   - pip install pipenv
@@ -22,9 +25,6 @@ before_script:
   - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
   - export PATH="$PATH:/usr/local/bin/chromedriver"
-
-services:
-  - postgresql
 
 script:
   - coverage run -a --source=".." ./manage.py test
