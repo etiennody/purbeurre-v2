@@ -14,7 +14,6 @@ branches:
 install:
   - pip install pipenv
   - pipenv sync
-  - pipenv shell
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_project.settings.ci"
 
@@ -23,6 +22,7 @@ before_script:
   - wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin/chromedriver 
   - export PATH="$PATH:/usr/local/bin/chromedriver"
+  - pipenv shell
 
 services:
   - postgresql
