@@ -139,11 +139,6 @@ class Command(BaseCommand):
                 print("Un des produits n'a pu être importé, voici l'erreur :", exx)
 
     def handle(self, *args, **options):
-        Product.objects.all().delete()
-        Category.objects.all().delete()
-        self.stdout.write(
-            self.style.SUCCESS("Cleaning Product and Category tables successfully!")
-        )
         self.stdout.write("Product downloads in progress...")
         # Process for products
         for category in self.get_populate_categories():
