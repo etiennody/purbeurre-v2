@@ -28,10 +28,14 @@ Mon compte
 
 {% block content %}
 <div class="container border-top pt-5">
-    <div class="row">
+    <div class="row border-bottom pb-5">
         <div class="col">
             <h3>{{ user.email }}</h3>
-        </div>
+            <br>
+            <a href="{% url 'password' %}"
+                class="btn btn-outline-info btn-rounded waves-effect" role="button"
+                aria-pressed="true">Modifier le mot de passe</a>
+        </div>      
     </div>
 </div>
 {% endblock content %}
