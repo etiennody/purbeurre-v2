@@ -2,9 +2,11 @@
 """
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
-from .forms import UserRegisterForm
+from .forms import PasswordChangingForm, UserRegisterForm
 
 
 def register(request):
@@ -43,3 +45,12 @@ def profile(request):
         object: a profile html document for users
     """
     return render(request, "users/profile.html")
+
+
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy("password_success")
+
+
+def password_success(request):
+    return render(request, "users/password_success.html", {})
