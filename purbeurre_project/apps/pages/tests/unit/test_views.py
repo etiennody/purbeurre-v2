@@ -24,3 +24,11 @@ class PurbeurrePagesTests(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "pages/home.html")
+
+    def test_valid_tos_view(self):
+        """Test to make sure that our terms of service returns home URL
+        """
+        response = self.client.get(reverse("tos"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "pages/tos.html")
+

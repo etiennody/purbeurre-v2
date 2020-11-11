@@ -164,7 +164,6 @@ class ProductSubstituteTest(TestCase):
         )
         prod3.categories.add(categ1)
         response = prod1.substitutes(nb_common_categories=2)
-        print(str(response.query))
         self.assertEqual(response.count(), 1)
         self.assertEqual(list(response), [prod2])
 
@@ -229,6 +228,5 @@ class ProductSubstituteTest(TestCase):
         )
         categ2.product_set.add(prod3)
         response = prod2.substitutes(nb_common_categories=2)
-        print(str(response.query))
         self.assertEqual(response.count(), 0)
         self.assertEqual(list(response), [])
