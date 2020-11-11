@@ -142,3 +142,36 @@ class ProfileTests(TestCase):
         response = self.client.get(reverse("profile"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "users/profile.html")
+
+
+class ChangePasswordTests(TestCase):
+    """Change Password Unit Test view"""
+
+    def setUp(self):
+        """ChangePassword test set up"""
+        self.credentials = {
+            "username": "BobRobert",
+            "email": "test_bob@test.fr",
+            "password": "fglZ9fYmr%?,",
+        }
+        User.objects.create_user(**self.credentials)
+        self.client.login(
+            username=self.credentials["username"], password=self.credentials["password"]
+        )
+        self.user = User.objects.get(username=self.credentials["username"])
+
+    def test_root_url_resolves_to_change_password_view(self):
+        """Valid the status code 200 and the template used to change password
+        """
+        response = self.client.get(reverse("password"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "users/change-password.html")
+
+    def test_change_password_returns_correct_html(self):
+        """Valid html document and the html title in change password page
+        """
+        response = self.client.get(reverse("password"))  
+        html = response.content.decode('utf8')  
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))
+        self.assertIn('<title>\nModifier votre mot de passe\n :: Purbeurre</title>', html) 
+        self.assertTrue(html.endswith('</html>'))
