@@ -1,7 +1,7 @@
 # Purbeurre
 [![Build Status](https://travis-ci.com/etiennody/purbeurre-v2.svg?branch=staging)](https://travis-ci.com/etiennody/purbeurre-v2)
 
-[![Coverage Status](https://coveralls.io/repos/github/etiennody/purbeurre-v2/badge.svg?branch=staging)](https://coveralls.io/github/etiennody/purbeurre-v2?branch=staging)
+[![Coverage Status](https://coveralls.io/repos/github/etiennody/purbeurre-v2/badge.svg?branch=master)](https://coveralls.io/github/etiennody/purbeurre-v2?branch=master)
 
 App built for project 10 in Python developer path at Openclassrooms.
 
