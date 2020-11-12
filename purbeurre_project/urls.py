@@ -21,7 +21,9 @@ from django.urls import path
 
 from .apps.pages import views as pages_views
 from .apps.product import views as product_views
+from .apps.users import views as password_view
 from .apps.users import views as user_view
+from .apps.users.views import PasswordsChangeView
 
 urlpatterns = [
     path("", pages_views.home, name="home"),
@@ -49,6 +51,16 @@ urlpatterns = [
         "logout/",
         auth_views.LogoutView.as_view(template_name="users/logout.html"),
         name="logout",
+    ),
+    path(
+        "password/",
+        PasswordsChangeView.as_view(template_name="users/change-password.html"),
+        name="password",
+    ),
+    path(
+        "password_success",
+        password_view.password_success,
+        name="password_success",
     ),
     path("admin/", admin.site.urls),
 ]
