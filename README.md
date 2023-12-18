@@ -7,9 +7,6 @@ App built for project 10 in Python developer path at Openclassrooms.
 
 The startup Pur Beurre wants to develop a web platform for its customers. This site will allow anyone to find a healthy substitute for a food considered "Too fat, too sweet, too salty".
 
-## Online application
-***
-
 ## Requirements
 * Python 3
 * Django
